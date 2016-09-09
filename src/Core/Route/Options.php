@@ -135,7 +135,9 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 */
 	public function add( $options ) {
 
-		$this->options[] = $options instanceof Arguments ? $options->to_array() : (array) $options;
+		$options = $options instanceof Arguments ? $options->to_array() : [ (array) $options ];
+
+		$this->options = array_merge( $this->options, $options );
 
 		return $this;
 	}
