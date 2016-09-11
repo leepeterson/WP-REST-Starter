@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+* **Fix** `~\Core\Route\Options::add()`, see [#1](https://github.com/inpsyde/WP-REST-Starter/issues/1).
+
 ## 2.0.0
 
 * **[BREAKING]** **Finalize** all classes that implement at least one provided interface and that are not overcomplete.
