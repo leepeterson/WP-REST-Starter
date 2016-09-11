@@ -198,7 +198,7 @@ class OptionsTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function test_add() {
+	public function test_add_array_to_empty_options() {
 
 		$options = [ 'some', 'options', 'here' ];
 
@@ -206,6 +206,141 @@ class OptionsTest extends TestCase {
 
 		$expected = [
 			$options,
+		];
+
+		$this->assertEquals( $expected, $testee->to_array() );
+	}
+
+	/**
+	 * Tests adding to the options.
+	 *
+	 * @since  2.0.1
+	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::__construct()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add()
+	 *
+	 * @return void
+	 */
+	public function test_add_array_to_options() {
+
+		$initial_options = [ 'some', 'initial', 'options' ];
+
+		$options = [ 'some', 'other', 'options' ];
+
+		$testee = ( new Testee( $initial_options ) )->add( $options );
+
+		$expected = [
+			$initial_options,
+			$options,
+		];
+
+		$this->assertEquals( $expected, $testee->to_array() );
+	}
+
+	/**
+	 * Tests adding to the options.
+	 *
+	 * @since  2.0.1
+	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::__construct()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add()
+	 *
+	 * @return void
+	 */
+	public function test_add_object_to_empty_options() {
+
+		$options = [ 'some', 'options', 'here' ];
+
+		$testee = ( new Testee() )->add( new Testee( $options ) );
+
+		$expected = [
+			$options,
+		];
+
+		$this->assertEquals( $expected, $testee->to_array() );
+	}
+
+	/**
+	 * Tests adding to the options.
+	 *
+	 * @since  2.0.1
+	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::__construct()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add()
+	 *
+	 * @return void
+	 */
+	public function test_add_object_to_options() {
+
+		$initial_options = [ 'some', 'initial', 'options' ];
+
+		$options = [ 'some', 'other', 'options' ];
+
+		$testee = ( new Testee( $initial_options ) )->add( new Testee( $options ) );
+
+		$expected = [
+			$initial_options,
+			$options,
+		];
+
+		$this->assertEquals( $expected, $testee->to_array() );
+	}
+
+	/**
+	 * Tests adding to the options.
+	 *
+	 * @since  2.0.1
+	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::__construct()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::set_schema()
+	 *
+	 * @return void
+	 */
+	public function test_add_array_to_options_with_schema() {
+
+		$initial_options = [ 'some', 'initial', 'options' ];
+
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
+
+		$options = [ 'some', 'other', 'options' ];
+
+		$testee = ( new Testee( $initial_options ) )->set_schema( $schema )->add( $options );
+
+		$expected = [
+			$initial_options,
+			$options,
+			'schema' => [ $schema, 'get_schema' ],
+		];
+
+		$this->assertEquals( $expected, $testee->to_array() );
+	}
+
+	/**
+	 * Tests adding to the options.
+	 *
+	 * @since  2.0.1
+	 *
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::__construct()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::add()
+	 * @covers Inpsyde\WPRESTStarter\Core\Route\Options::set_schema()
+	 *
+	 * @return void
+	 */
+	public function test_add_object_to_options_with_schema() {
+
+		$initial_options = [ 'some', 'initial', 'options' ];
+
+		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Endpoint\Schema' );
+
+		$options = [ 'some', 'other', 'options' ];
+
+		$testee = ( new Testee( $initial_options ) )->set_schema( $schema )->add( new Testee( $options ) );
+
+		$expected = [
+			$initial_options,
+			$options,
+			'schema' => [ $schema, 'get_schema' ],
 		];
 
 		$this->assertEquals( $expected, $testee->to_array() );
