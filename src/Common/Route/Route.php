@@ -20,7 +20,7 @@ interface Route {
 	 *
 	 * @return array Route options.
 	 */
-	public function get_options();
+	public function get_options(): array;
 
 	/**
 	 * Returns the base URL of the route.
@@ -30,5 +30,5 @@ interface Route {
 	 *
 	 * @return string Base URL of the route.
 	 */
-	public function get_url();
+	public function get_url(): string;
 }

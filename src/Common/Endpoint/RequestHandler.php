@@ -24,5 +24,5 @@ interface RequestHandler {
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function handle_request( WP_REST_Request $request );
+	public function handle_request( WP_REST_Request $request ): WP_REST_Response;
 }

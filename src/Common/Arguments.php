@@ -19,5 +19,5 @@ interface Arguments {
 	 *
 	 * @return array[] Arguments array.
 	 */
-	public function to_array();
+	public function to_array(): array;
 }

@@ -21,5 +21,5 @@ interface Access {
 	 *
 	 * @return array[] Field definitions.
 	 */
-	public function get_fields( $resource = '' );
+	public function get_fields( string $resource = '' ): array;
 }

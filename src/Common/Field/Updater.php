@@ -31,8 +31,8 @@ interface Updater {
 	public function update_value(
 		$value,
 		$object,
-		$field_name,
+		string $field_name,
 		WP_REST_Request $request = null,
-		$object_type = ''
-	);
+		string $object_type = ''
+	): bool;
 }

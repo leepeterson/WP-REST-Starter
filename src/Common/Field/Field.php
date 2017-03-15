@@ -20,7 +20,7 @@ interface Field {
 	 *
 	 * @return array Field definition.
 	 */
-	public function get_definition();
+	public function get_definition(): array;
 
 	/**
 	 * Returns the name of the field.
@@ -30,5 +30,5 @@ interface Field {
 	 *
 	 * @return string Field name.
 	 */
-	public function get_name();
+	public function get_name(): string;
 }

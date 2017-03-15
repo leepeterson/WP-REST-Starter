@@ -22,7 +22,7 @@ interface Schema extends Common\Schema {
 	 *
 	 * @return array Properties definition.
 	 */
-	public function get_properties();
+	public function get_properties(): array;
 
 	/**
 	 * Returns the title of the schema.
@@ -31,5 +31,5 @@ interface Schema extends Common\Schema {
 	 *
 	 * @return string Title.
 	 */
-	public function get_title();
+	public function get_title(): string;
 }

@@ -25,7 +25,7 @@ interface FieldProcessor {
 	 *
 	 * @return array Object with added data of all registered readable fields.
 	 */
-	public function add_fields_to_object( $object, WP_REST_Request $request, $object_type = '' );
+	public function add_fields_to_object( array $object, WP_REST_Request $request, string $object_type = '' ): array;
 
 	/**
 	 * Updates all registered updatable fields of the given object.
@@ -38,5 +38,5 @@ interface FieldProcessor {
 	 *
 	 * @return int Number of fields updated.
 	 */
-	public function update_fields_for_object( $object, WP_REST_Request $request, $object_type = '' );
+	public function update_fields_for_object( array $object, WP_REST_Request $request, string $object_type = '' ): int;
 }

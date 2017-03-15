@@ -23,5 +23,5 @@ interface SchemaAwareField extends Field {
 	 *
 	 * @return SchemaAwareField Field object.
 	 */
-	public function set_schema( Schema $schema = null );
+	public function set_schema( Schema $schema = null ): SchemaAwareField;
 }

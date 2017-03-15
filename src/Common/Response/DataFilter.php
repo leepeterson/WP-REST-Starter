@@ -22,5 +22,5 @@ interface DataFilter {
 	 *
 	 * @return array Filtered data.
 	 */
-	public function filter_data( array $data, $context = 'view' );
+	public function filter_data( array $data, string $context = 'view' ): array;
 }

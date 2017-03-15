@@ -21,5 +21,5 @@ interface UpdatableField extends Field {
 	 *
 	 * @return UpdatableField Field object.
 	 */
-	public function set_update_callback( Updater $updater = null );
+	public function set_update_callback( Updater $updater = null ): UpdatableField;
 }

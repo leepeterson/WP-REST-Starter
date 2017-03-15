@@ -21,5 +21,5 @@ interface ReadableField extends Field {
 	 *
 	 * @return ReadableField Field object.
 	 */
-	public function set_get_callback( Reader $reader = null );
+	public function set_get_callback( Reader $reader = null ): ReadableField;
 }

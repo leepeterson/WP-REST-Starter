@@ -23,5 +23,5 @@ interface ExtensibleOptions extends Arguments {
 	 *
 	 * @return ExtensibleOptions Options object.
 	 */
-	public function add( $options );
+	public function add( $options ): ExtensibleOptions;
 }

@@ -24,5 +24,5 @@ interface SchemaAwareOptions extends Arguments {
 	 *
 	 * @return SchemaAwareOptions Options object.
 	 */
-	public function set_schema( Schema $schema );
+	public function set_schema( Schema $schema ): SchemaAwareOptions;
 }

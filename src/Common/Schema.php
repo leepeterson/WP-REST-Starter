@@ -19,5 +19,5 @@ interface Schema {
 	 *
 	 * @return array Schema definition.
 	 */
-	public function get_schema();
+	public function get_schema(): array;
 }

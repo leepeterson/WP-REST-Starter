@@ -23,5 +23,5 @@ interface DataAccess {
 	 *
 	 * @return array The array holding the data as well as the defined links of the given response object.
 	 */
-	public function get_data( WP_REST_Response $response );
+	public function get_data( WP_REST_Response $response ): array;
 }

@@ -23,9 +23,9 @@ interface Collection extends IteratorAggregate {
 	 * @param string $resource Resource name to add the field to.
 	 * @param Field  $field    Field object.
 	 *
-	 * @return static Collection object.
+	 * @return Collection Collection object.
 	 */
-	public function add( $resource, Field $field );
+	public function add( string $resource, Field $field ): Collection;
 
 	/**
 	 * Deletes the field object with the given name from the resource with the given name from the collection.
@@ -35,7 +35,7 @@ interface Collection extends IteratorAggregate {
 	 * @param string $resource   Resource name to delete the field from.
 	 * @param string $field_name Field name.
 	 *
-	 * @return static Collection object.
+	 * @return Collection Collection object.
 	 */
-	public function delete( $resource, $field_name );
+	public function delete( string $resource, string $field_name ): Collection;
 }

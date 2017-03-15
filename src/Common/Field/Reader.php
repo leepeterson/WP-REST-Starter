@@ -29,8 +29,8 @@ interface Reader {
 	 */
 	public function get_value(
 		array $object,
-		$field_name,
+		string $field_name,
 		WP_REST_Request $request,
-		$object_type = ''
+		string $object_type = ''
 	);
 }

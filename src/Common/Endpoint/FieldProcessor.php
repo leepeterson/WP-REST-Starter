@@ -22,5 +22,5 @@ interface FieldProcessor {
 	 *
 	 * @return array Properties with added data of all schema-aware fields registered for the given object type.
 	 */
-	public function get_extended_properties( array $properties, $object_type );
+	public function get_extended_properties( array $properties, string $object_type ): array;
 }

@@ -22,9 +22,9 @@ interface Collection extends IteratorAggregate {
 	 *
 	 * @param Route $route Route object.
 	 *
-	 * @return static Collection object.
+	 * @return Collection Collection object.
 	 */
-	public function add( Route $route );
+	public function add( Route $route ): Collection;
 
 	/**
 	 * Deletes the route object at the given index from the collection.
@@ -33,7 +33,7 @@ interface Collection extends IteratorAggregate {
 	 *
 	 * @param int $index Index of the route object.
 	 *
-	 * @return static Collection object.
+	 * @return Collection Collection object.
 	 */
-	public function delete( $index );
+	public function delete( int $index ): Collection;
 }
