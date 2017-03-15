@@ -30,6 +30,6 @@ final class Access implements Common\Field\Access {
 			return [];
 		}
 
-		return $GLOBALS['wp_rest_additional_fields'][ $resource ];
+		return (array) $GLOBALS['wp_rest_additional_fields'][ $resource ];
 	}
 }
