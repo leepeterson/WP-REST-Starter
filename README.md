@@ -12,7 +12,7 @@
 
 ## Introduction
 
-Since the infrastructure of the WordPress REST API got merged into Core and more and more will be integrated, it's obvious for others to jump on the bandwagon.
+Since both the infrastructure and the first set of endpoints of the WordPress REST API got merged into Core, it’s obvious for plugin and even theme authors to jump on the bandwagon.
 This package provides you with virtually anything you need to start _feeling RESTful_.
 
 WP REST Starter consists of several interfaces for both data types and _business logic_, and it comes with straightforward implementations suitable for the common needs.
@@ -53,15 +53,15 @@ $ vendor/bin/phpunit
 
 ### Requirements
 
-This package requires PHP 5.4 or higher.
+This package requires PHP 7 or higher.
 
-Adding custom fields to existing resources requires the [WP REST API](https://wordpress.org/plugins/rest-api/) plugin.
-If all you want to do is define custom REST routes, you're already good to go with WordPress 4.4 or higher. 
+Adding custom fields to existing resources requires WordPress 4.7 or higher, or the [WP REST API](https://wordpress.org/plugins/rest-api/) plugin.
+If all you want to do is define custom REST routes, you're already good to go with WordPress 4.4 or higher.
 
 ## Usage
 
 The following sections will help you get started with the WordPress REST API in an object-oriented fashion.
-If you're new to working with the WordPress REST API in general, please refer to [the official WP REST API documentation](http://v2.wp-api.org/).
+If you're new to working with the WordPress REST API in general, please refer to [the REST API handbook](https://developer.wordpress.org/rest-api/).
 
 ### Actions
 
@@ -857,6 +857,6 @@ class SomeFormatter {
 
 ## License
 
-Copyright (c) 2016 Inpsyde GmbH
+Copyright (c) 2017 Inpsyde GmbH
 
 This code is licensed under the [MIT License](LICENSE).
