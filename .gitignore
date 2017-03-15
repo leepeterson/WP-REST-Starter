@@ -10,8 +10,8 @@ logs
 *.log
 
 # Composer
-vendor
 composer.lock
+vendor
 
 # Node
 .npm
