@@ -51,7 +51,7 @@ final class LinkAwareDataAccess implements DataAccess {
 
 		foreach ( [ 'get_compact_response_links', 'get_response_links' ] as $method ) {
 			if ( is_callable( [ $server, $method ] ) ) {
-				return (array) call_user_func( [ $server, $method ], $response );
+				return (array) ( [ $server, $method ] )( $response );
 			}
 		}
 

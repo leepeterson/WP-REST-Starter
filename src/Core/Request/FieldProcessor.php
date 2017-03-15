@@ -60,13 +60,7 @@ class FieldProcessor implements Common\Request\FieldProcessor {
 				continue;
 			}
 
-			$object[ $name ] = call_user_func(
-				$definition['get_callback'],
-				$object,
-				$name,
-				$request,
-				$object_type
-			);
+			$object[ $name ] = $definition['get_callback']( $object, $name, $request, $object_type );
 		}
 
 		return $object;
@@ -105,14 +99,7 @@ class FieldProcessor implements Common\Request\FieldProcessor {
 				continue;
 			}
 
-			call_user_func(
-				$definition['update_callback'],
-				$request[ $name ],
-				$object,
-				$name,
-				$request,
-				$object_type
-			);
+			$definition['update_callback']( $request[ $name ], $object, $name, $request, $object_type );
 
 			$updated++;
 		}
