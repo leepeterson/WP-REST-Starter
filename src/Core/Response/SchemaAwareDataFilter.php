@@ -42,7 +42,7 @@ final class SchemaAwareDataFilter implements DataFilter {
 	 *
 	 * @return array Filtered response data.
 	 */
-	public function filter_data( array $data, $context = 'view' ) {
+	public function filter_data( array $data, string $context = 'view' ): array {
 
 		foreach ( $data as $key => $value ) {
 			if ( empty( $this->properties[ $key ] ) ) {

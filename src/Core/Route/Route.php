@@ -33,7 +33,7 @@ final class Route implements Common\Route\Route {
 	 * @param string           $url     Base URL of the route.
 	 * @param Common\Arguments $options Route options object.
 	 */
-	public function __construct( $url, Common\Arguments $options ) {
+	public function __construct( string $url, Common\Arguments $options ) {
 
 		$this->url = trim( $url, '/' );
 
@@ -48,7 +48,7 @@ final class Route implements Common\Route\Route {
 	 *
 	 * @return array Route options.
 	 */
-	public function get_options() {
+	public function get_options(): array {
 
 		return $this->options->to_array();
 	}
@@ -61,7 +61,7 @@ final class Route implements Common\Route\Route {
 	 *
 	 * @return string Base URL of the route.
 	 */
-	public function get_url() {
+	public function get_url(): string {
 
 		return $this->url;
 	}

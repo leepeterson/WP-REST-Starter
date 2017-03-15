@@ -43,7 +43,7 @@ final class Factory implements Common\Factory {
 	 * @throws InvalidArgumentException if the given base is not a valid fully qualified class or interface name.
 	 * @throws InvalidArgumentException if no default class is given and the base is an interface.
 	 */
-	public function __construct( $base, $default_class = '' ) {
+	public function __construct( string $base, string $default_class = '' ) {
 
 		$this->base_is_class = class_exists( $base );
 
@@ -53,17 +53,17 @@ final class Factory implements Common\Factory {
 			);
 		}
 
-		$this->base = (string) $base;
+		$this->base = $base;
 
 		if ( $default_class ) {
 			$this->check_class( $default_class );
-			$this->default_class = (string) $default_class;
+			$this->default_class = $default_class;
 
 			return;
 		}
 
 		if ( $this->base_is_class ) {
-			$this->default_class = (string) $base;
+			$this->default_class = $base;
 
 			return;
 		}
@@ -82,11 +82,11 @@ final class Factory implements Common\Factory {
 	 * @param string $base          Fully qualified name of the base class or interface.
 	 * @param string $default_class Fully qualified name of the default class.
 	 *
-	 * @return static Factory object.
+	 * @return Factory Factory object.
 	 */
-	public static function with_default_class( $base, $default_class ) {
+	public static function with_default_class( string $base, string $default_class ): Factory {
 
-		return new static( (string) $base, (string) $default_class );
+		return new static( $base, $default_class );
 	}
 
 	/**
@@ -99,11 +99,10 @@ final class Factory implements Common\Factory {
 	 *
 	 * @return object Object of the given (or default) class, instantiated with the given arguments.
 	 */
-	public function create( array $args = [], $class = '' ) {
+	public function create( array $args = [], string $class = '' ) {
 
 		if ( $class ) {
 			$this->check_class( $class );
-			$class = (string) $class;
 		} else {
 			$class = $this->default_class;
 		}
@@ -128,7 +127,7 @@ final class Factory implements Common\Factory {
 	 *
 	 * @throws InvalidClassException if the class with the given name is invalid with respect to the defined base.
 	 */
-	private function check_class( $class ) {
+	private function check_class( string $class ) {
 
 		if (
 			! is_subclass_of( $class, $this->base, true )

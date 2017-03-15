@@ -64,14 +64,14 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 * @param string         $methods Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
 	 * @param array          $options Optional. Additional options array. Defaults to empty array.
 	 *
-	 * @return static Route options object.
+	 * @return Options Route options object.
 	 */
 	public static function from_arguments(
 		RequestHandler $handler = null,
 		Arguments $args = null,
-		$methods = self::DEFAULT_METHODS,
+		string $methods = self::DEFAULT_METHODS,
 		array $options = []
-	) {
+	): Options {
 
 		if ( $handler ) {
 			$options['callback'] = [ $handler, 'handle_request' ];
@@ -81,7 +81,7 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 			$options['args'] = $args->to_array();
 		}
 
-		$options['methods'] = (string) $methods;
+		$options['methods'] = $methods;
 
 		return new static( $options );
 	}
@@ -97,14 +97,14 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 * @param string   $methods  Optional. Comma-separated HTTP verbs. Defaults to self::DEFAULT_METHODS.
 	 * @param array    $options  Optional. Route options. Defaults to empty array.
 	 *
-	 * @return static Route options object.
+	 * @return Options Route options object.
 	 */
 	public static function with_callback(
-		$callback,
+		callable $callback,
 		array $args = [],
-		$methods = self::DEFAULT_METHODS,
+		string $methods = self::DEFAULT_METHODS,
 		array $options = []
-	) {
+	): Options {
 
 		return new static( compact( 'methods', 'callback', 'args' ) + $options );
 	}
@@ -118,9 +118,9 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 * @param Schema $schema  Schema object.
 	 * @param array  $options Optional. Route options. Defaults to empty array.
 	 *
-	 * @return static Route options object.
+	 * @return Options Route options object.
 	 */
-	public static function with_schema( Schema $schema, array $options = [] ) {
+	public static function with_schema( Schema $schema, array $options = [] ): Options {
 
 		return ( new static( $options ) )->set_schema( $schema );
 	}
@@ -133,9 +133,9 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 *
 	 * @param Arguments|array $options Options object or array.
 	 *
-	 * @return static Options object.
+	 * @return ExtensibleOptions Options object.
 	 */
-	public function add( $options ) {
+	public function add( $options ): ExtensibleOptions {
 
 		$options = $options instanceof Arguments ? $options->to_array() : [ (array) $options ];
 
@@ -151,9 +151,9 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 *
 	 * @param Schema $schema Schema object.
 	 *
-	 * @return static Options object.
+	 * @return SchemaAwareOptions Options object.
 	 */
-	public function set_schema( Schema $schema ) {
+	public function set_schema( Schema $schema ): SchemaAwareOptions {
 
 		$this->options['schema'] = [ $schema, 'get_schema' ];
 
@@ -167,7 +167,7 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 *
 	 * @return array Route options.
 	 */
-	public function to_array() {
+	public function to_array(): array {
 
 		return $this->options;
 	}

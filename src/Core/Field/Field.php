@@ -41,9 +41,9 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 * @param string $name       Field name.
 	 * @param array  $definition Optional. Field definition. Defaults to empty array.
 	 */
-	public function __construct( $name, array $definition = [] ) {
+	public function __construct( string $name, array $definition = [] ) {
 
-		$this->name = (string) $name;
+		$this->name = $name;
 
 		$this->definition = $definition;
 	}
@@ -55,9 +55,9 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @param Reader $reader Optional. Field reader object. Defaults to null.
 	 *
-	 * @return static Field object.
+	 * @return ReadableField Field object.
 	 */
-	public function set_get_callback( Reader $reader = null ) {
+	public function set_get_callback( Reader $reader = null ): ReadableField {
 
 		$this->definition['get_callback'] = $reader ? [ $reader, 'get_value' ] : null;
 
@@ -71,9 +71,9 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @param Schema $schema Optional. Schema object. Defaults to null.
 	 *
-	 * @return static Field object.
+	 * @return SchemaAwareField Field object.
 	 */
-	public function set_schema( Schema $schema = null ) {
+	public function set_schema( Schema $schema = null ): SchemaAwareField {
 
 		$this->definition['schema'] = $schema ? [ $schema, 'get_schema' ] : null;
 
@@ -87,9 +87,9 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @param Updater $updater Optional. Field updater object. Defaults to null.
 	 *
-	 * @return static Field object.
+	 * @return UpdatableField Field object.
 	 */
-	public function set_update_callback( Updater $updater = null ) {
+	public function set_update_callback( Updater $updater = null ): UpdatableField {
 
 		$this->definition['update_callback'] = $updater ? [ $updater, 'update_value' ] : null;
 
@@ -104,7 +104,7 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @return array Field definition.
 	 */
-	public function get_definition() {
+	public function get_definition(): array {
 
 		return $this->definition;
 	}
@@ -117,7 +117,7 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @return string Field name.
 	 */
-	public function get_name() {
+	public function get_name(): string {
 
 		return $this->name;
 	}

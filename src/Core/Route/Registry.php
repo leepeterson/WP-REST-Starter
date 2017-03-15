@@ -27,9 +27,9 @@ final class Registry implements Common\Route\Registry {
 	 *
 	 * @param string $namespace Namespace.
 	 */
-	public function __construct( $namespace ) {
+	public function __construct( string $namespace ) {
 
-		$this->namespace = (string) $namespace;
+		$this->namespace = $namespace;
 	}
 
 	/**

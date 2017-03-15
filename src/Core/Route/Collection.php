@@ -30,9 +30,9 @@ final class Collection implements Common\Route\Collection {
 	 *
 	 * @param Common\Route\Route $route Route object.
 	 *
-	 * @return static Collection object.
+	 * @return Common\Route\Collection Collection object.
 	 */
-	public function add( Common\Route\Route $route ) {
+	public function add( Common\Route\Route $route ): Common\Route\Collection {
 
 		$this->routes[] = $route;
 
@@ -46,9 +46,9 @@ final class Collection implements Common\Route\Collection {
 	 *
 	 * @param int $index Index of the route object.
 	 *
-	 * @return static Collection object.
+	 * @return Common\Route\Collection Collection object.
 	 */
-	public function delete( $index ) {
+	public function delete( int $index ): Common\Route\Collection {
 
 		unset( $this->routes[ $index ] );
 

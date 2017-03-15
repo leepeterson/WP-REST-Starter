@@ -31,9 +31,9 @@ final class Collection implements Common\Field\Collection {
 	 * @param string             $resource Resource name to add the field to.
 	 * @param Common\Field\Field $field    Field object.
 	 *
-	 * @return static Collection object.
+	 * @return Common\Field\Collection Collection object.
 	 */
-	public function add( $resource, Common\Field\Field $field ) {
+	public function add( string $resource, Common\Field\Field $field ): Common\Field\Collection {
 
 		$this->fields[ $resource ][ $field->get_name() ] = $field;
 
@@ -48,9 +48,9 @@ final class Collection implements Common\Field\Collection {
 	 * @param string $resource   Resource name to delete the field from.
 	 * @param string $field_name Field name.
 	 *
-	 * @return static Collection object.
+	 * @return Common\Field\Collection Collection object.
 	 */
-	public function delete( $resource, $field_name ) {
+	public function delete( string $resource, string $field_name ): Common\Field\Collection {
 
 		unset( $this->fields[ $resource ][ $field_name ] );
 

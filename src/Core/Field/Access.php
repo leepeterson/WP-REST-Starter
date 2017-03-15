@@ -24,7 +24,7 @@ final class Access implements Common\Field\Access {
 	 *
 	 * @return array[] Field definitions.
 	 */
-	public function get_fields( $resource = '' ) {
+	public function get_fields( string $resource = '' ): array {
 
 		if ( empty( $GLOBALS['wp_rest_additional_fields'][ $resource ] ) ) {
 			return [];

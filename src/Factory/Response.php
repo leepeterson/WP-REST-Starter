@@ -39,9 +39,9 @@ final class Response implements Common\Factory {
 	 *
 	 * @param string $default_class Optional. Fully qualified name of the default class. Defaults to self::BASE.
 	 */
-	public function __construct( $default_class = self::BASE ) {
+	public function __construct( string $default_class = self::BASE ) {
 
-		$this->factory = Factory::with_default_class( self::BASE, (string) $default_class );
+		$this->factory = Factory::with_default_class( self::BASE, $default_class );
 	}
 
 	/**
@@ -56,10 +56,10 @@ final class Response implements Common\Factory {
 	 *
 	 * @throws Throwable if caught any and WP_DEBUG is set to true.
 	 */
-	public function create( array $args = [], $class = '' ) {
+	public function create( array $args = [], string $class = '' ): WP_REST_Response {
 
 		try {
-			$object = $this->factory->create( $args, (string) $class );
+			$object = $this->factory->create( $args, $class );
 		} catch ( Throwable $e ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 				throw $e;
