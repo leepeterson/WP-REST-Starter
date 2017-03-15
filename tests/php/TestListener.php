@@ -1,11 +1,14 @@
 <?php # -*- coding: utf-8 -*-
 
+use PHPUnit\Framework\BaseTestListener;
+use PHPUnit\Framework\TestSuite;
+
 /**
  * Test listener implementation taking care of loading stubs for unit tests.
  *
  * @since 1.0.0
  */
-class TestListener extends PHPUnit_Framework_BaseTestListener {
+class TestListener extends BaseTestListener {
 
 	/**
 	 * Performs individual test-suite-specific actions.
@@ -14,11 +17,11 @@ class TestListener extends PHPUnit_Framework_BaseTestListener {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param PHPUnit_Framework_TestSuite $suite Test suite object.
+	 * @param TestSuite $suite Test suite object.
 	 *
 	 * @return void
 	 */
-	public function startTestSuite( PHPUnit_Framework_TestSuite $suite ) {
+	public function startTestSuite( TestSuite $suite ) {
 
 		switch ( strtolower( $suite->getName() ) ) {
 			case 'unit':

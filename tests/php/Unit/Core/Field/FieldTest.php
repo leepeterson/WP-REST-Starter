@@ -27,7 +27,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_set_get_callback_returns_this() {
 
-		$testee = new Testee( null );
+		$testee = new Testee( '' );
 
 		$this->assertSame( $testee, $testee->set_get_callback() );
 	}
@@ -45,7 +45,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_set_schema_returns_this() {
 
-		$testee = new Testee( null );
+		$testee = new Testee( '' );
 
 		$this->assertSame( $testee, $testee->set_schema() );
 	}
@@ -63,7 +63,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_set_update_callback_returns_this() {
 
-		$testee = new Testee( null );
+		$testee = new Testee( '' );
 
 		$this->assertSame( $testee, $testee->set_update_callback() );
 	}
@@ -80,7 +80,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_get_default_definition() {
 
-		$this->assertSame( [], ( new Testee( null ) )->get_definition() );
+		$this->assertSame( [], ( new Testee( '' ) )->get_definition() );
 	}
 
 	/**
@@ -97,7 +97,7 @@ class FieldTest extends TestCase {
 
 		$definition = [ 'some', 'values', 'here' ];
 
-		$this->assertSame( $definition, ( new Testee( null, $definition ) )->get_definition() );
+		$this->assertSame( $definition, ( new Testee( '', $definition ) )->get_definition() );
 	}
 
 	/**

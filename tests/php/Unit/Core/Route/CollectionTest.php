@@ -47,7 +47,7 @@ class CollectionTest extends TestCase {
 
 		$testee = new Testee();
 
-		$this->assertSame( $testee, $testee->delete( null ) );
+		$this->assertSame( $testee, $testee->delete( 0 ) );
 	}
 
 	/**

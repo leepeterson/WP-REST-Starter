@@ -32,7 +32,7 @@ class CollectionTest extends TestCase {
 		$field = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Field' );
 		$field->shouldReceive( 'get_name' );
 
-		$this->assertSame( $testee, $testee->add( null, $field ) );
+		$this->assertSame( $testee, $testee->add( '', $field ) );
 	}
 
 	/**
@@ -50,7 +50,7 @@ class CollectionTest extends TestCase {
 
 		$testee = new Testee();
 
-		$this->assertSame( $testee, $testee->delete( null, null ) );
+		$this->assertSame( $testee, $testee->delete( '', '' ) );
 	}
 
 	/**

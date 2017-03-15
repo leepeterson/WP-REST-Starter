@@ -29,7 +29,7 @@ class FieldTest extends TestCase {
 
 		$reader = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Reader' );
 
-		$testee = ( new Testee( null ) )->set_get_callback( $reader );
+		$testee = ( new Testee( '' ) )->set_get_callback( $reader );
 
 		$expected = [
 			'get_callback' => [ $reader, 'get_value' ],
@@ -51,7 +51,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_reset_get_callback() {
 
-		$testee = ( new Testee( null, [ 'get_callback' => 'get_callback' ] ) )->set_get_callback();
+		$testee = ( new Testee( '', [ 'get_callback' => 'get_callback' ] ) )->set_get_callback();
 
 		$expected = [
 			'get_callback' => null,
@@ -75,7 +75,7 @@ class FieldTest extends TestCase {
 
 		$schema = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Schema' );
 
-		$testee = ( new Testee( null ) )->set_schema( $schema );
+		$testee = ( new Testee( '' ) )->set_schema( $schema );
 
 		$expected = [
 			'schema' => [ $schema, 'get_schema' ],
@@ -97,7 +97,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_reset_schema() {
 
-		$testee = ( new Testee( null, [ 'schema' => 'schema' ] ) )->set_schema();
+		$testee = ( new Testee( '', [ 'schema' => 'schema' ] ) )->set_schema();
 
 		$expected = [
 			'schema' => null,
@@ -121,7 +121,7 @@ class FieldTest extends TestCase {
 
 		$updater = Mockery::mock( 'Inpsyde\WPRESTStarter\Common\Field\Updater' );
 
-		$testee = ( new Testee( null ) )->set_update_callback( $updater );
+		$testee = ( new Testee( '' ) )->set_update_callback( $updater );
 
 		$expected = [
 			'update_callback' => [ $updater, 'update_value' ],
@@ -143,7 +143,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_reset_update_callback() {
 
-		$testee = ( new Testee( null, [ 'update_callback' => 'update_callback' ] ) )->set_update_callback();
+		$testee = ( new Testee( '', [ 'update_callback' => 'update_callback' ] ) )->set_update_callback();
 
 		$expected = [
 			'update_callback' => null,

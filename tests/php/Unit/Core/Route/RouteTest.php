@@ -32,7 +32,7 @@ class RouteTest extends TestCase {
 		$options->shouldReceive( 'to_array' )
 			->andReturn( $options_array );
 
-		$this->assertSame( $options_array, ( new Testee( null, $options ) )->get_options() );
+		$this->assertSame( $options_array, ( new Testee( '', $options ) )->get_options() );
 	}
 
 	/**

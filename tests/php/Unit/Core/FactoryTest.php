@@ -103,7 +103,7 @@ class FactoryTest extends TestCase {
 	 */
 	public function test_creating_factory_with_default_class_other_than_base() {
 
-		$factory = Testee::with_default_class( 'PHPUnit_Framework_TestCase', __CLASS__ );
+		$factory = Testee::with_default_class( '\PHPUnit\Framework\TestCase', __CLASS__ );
 
 		$this->assertInstanceOf( 'Inpsyde\WPRESTStarter\Core\Factory', $factory );
 	}
@@ -135,7 +135,7 @@ class FactoryTest extends TestCase {
 	 */
 	public function test_creating_instance_of_default_class() {
 
-		$this->assertInstanceOf( __CLASS__, ( new Testee( 'PHPUnit_Framework_TestCase', __CLASS__ ) )->create() );
+		$this->assertInstanceOf( __CLASS__, ( new Testee( '\PHPUnit\Framework\TestCase', __CLASS__ ) )->create() );
 	}
 
 	/**
@@ -165,7 +165,7 @@ class FactoryTest extends TestCase {
 	 */
 	public function test_creating_instance_of_given_class() {
 
-		$this->assertInstanceOf( __CLASS__, ( new Testee( 'PHPUnit_Framework_TestCase' ) )->create( [], __CLASS__ ) );
+		$this->assertInstanceOf( __CLASS__, ( new Testee( '\PHPUnit\Framework\TestCase' ) )->create( [], __CLASS__ ) );
 	}
 
 	/**
