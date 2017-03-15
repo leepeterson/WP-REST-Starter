@@ -6,8 +6,6 @@ namespace Inpsyde\WPRESTStarter\Factory;
 
 use Inpsyde\WPRESTStarter\Common;
 use Inpsyde\WPRESTStarter\Core\Factory;
-use Throwable;
-use WP_REST_Response;
 
 /**
  * Factory for REST response objects.
@@ -25,7 +23,7 @@ final class Response implements Common\Factory {
 	 *
 	 * @var string
 	 */
-	const BASE = WP_REST_Response::class;
+	const BASE = \WP_REST_Response::class;
 
 	/**
 	 * @var Factory
@@ -52,16 +50,16 @@ final class Response implements Common\Factory {
 	 * @param array  $args  Optional. Constructor arguments. Defaults to empty array.
 	 * @param string $class Optional. Fully qualified class name. Defaults to empty string.
 	 *
-	 * @return WP_REST_Response REST response object.
+	 * @return \WP_REST_Response REST response object.
 	 *
-	 * @throws Throwable if caught any and WP_DEBUG is set to true.
+	 * @throws \Throwable if caught any and WP_DEBUG is set to true.
 	 */
-	public function create( array $args = [], string $class = '' ): WP_REST_Response {
+	public function create( array $args = [], string $class = '' ): \WP_REST_Response {
 
 		try {
 			$object = $this->factory->create( $args, $class );
-		} catch ( Throwable $e ) {
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		} catch ( \Throwable $e ) {
+			if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 				throw $e;
 			}
 

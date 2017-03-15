@@ -26,9 +26,9 @@ final class Registry implements Common\Field\Registry {
 	 */
 	public function register_fields( Common\Field\Collection $fields ) {
 
-		if ( ! function_exists( 'register_rest_field' ) ) {
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				trigger_error( 'Function register_rest_field() not available. Cannot register additional fields.' );
+		if ( ! \function_exists( 'register_rest_field' ) ) {
+			if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				\trigger_error( 'Function register_rest_field() not available. Cannot register additional fields.' );
 			}
 
 			return;
@@ -41,12 +41,12 @@ final class Registry implements Common\Field\Registry {
 		 *
 		 * @param Common\Field\Collection $fields Field collection object.
 		 */
-		do_action( 'wp_rest_starter.register_fields', $fields );
+		\do_action( 'wp_rest_starter.register_fields', $fields );
 
 		foreach ( $fields as $resource => $resource_fields ) {
 			/** @var Common\Field\Field $field */
 			foreach ( $resource_fields as $field_name => $field ) {
-				register_rest_field( $resource, $field_name, $field->get_definition() );
+				\register_rest_field( $resource, $field_name, $field->get_definition() );
 			}
 		}
 	}

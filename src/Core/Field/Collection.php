@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 
 namespace Inpsyde\WPRESTStarter\Core\Field;
 
-use ArrayIterator;
 use Inpsyde\WPRESTStarter\Common;
 
 /**
@@ -62,10 +61,10 @@ final class Collection implements Common\Field\Collection {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return ArrayIterator Iterator object.
+	 * @return \ArrayIterator Iterator object.
 	 */
 	public function getIterator() {
 
-		return new ArrayIterator( $this->fields );
+		return new \ArrayIterator( $this->fields );
 	}
 }

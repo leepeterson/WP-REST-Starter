@@ -6,7 +6,6 @@ namespace Inpsyde\WPRESTStarter\Core\Request;
 
 use Inpsyde\WPRESTStarter\Common;
 use Inpsyde\WPRESTStarter\Core;
-use WP_REST_Request;
 
 /**
  * Simple field processor implementation.
@@ -38,13 +37,13 @@ class FieldProcessor implements Common\Request\FieldProcessor {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param array           $object      Object data in array form.
-	 * @param WP_REST_Request $request     Request object.
-	 * @param string          $object_type Optional. Object type. Defaults to empty string.
+	 * @param array            $object      Object data in array form.
+	 * @param \WP_REST_Request $request     Request object.
+	 * @param string           $object_type Optional. Object type. Defaults to empty string.
 	 *
 	 * @return array Object with added data of all registered readable fields.
 	 */
-	public function add_fields_to_object( array $object, WP_REST_Request $request, string $object_type = '' ): array {
+	public function add_fields_to_object( array $object, \WP_REST_Request $request, string $object_type = '' ): array {
 
 		$fields = $this->field_access->get_fields( $object_type );
 		foreach ( $fields as $name => $definition ) {
@@ -52,9 +51,9 @@ class FieldProcessor implements Common\Request\FieldProcessor {
 				continue;
 			}
 
-			if ( ! is_callable( $definition['get_callback'] ) ) {
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					trigger_error( "Invalid callback. Cannot read {$name} field for {$object_type}." );
+			if ( ! \is_callable( $definition['get_callback'] ) ) {
+				if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+					\trigger_error( "Invalid callback. Cannot read {$name} field for {$object_type}." );
 				}
 
 				continue;
@@ -71,13 +70,17 @@ class FieldProcessor implements Common\Request\FieldProcessor {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param array           $object      Object data in array form.
-	 * @param WP_REST_Request $request     Request object.
-	 * @param string          $object_type Optional. Object type. Defaults to empty string.
+	 * @param array            $object      Object data in array form.
+	 * @param \WP_REST_Request $request     Request object.
+	 * @param string           $object_type Optional. Object type. Defaults to empty string.
 	 *
 	 * @return int Number of fields updated.
 	 */
-	public function update_fields_for_object( array $object, WP_REST_Request $request, string $object_type = '' ): int {
+	public function update_fields_for_object(
+		array $object,
+		\WP_REST_Request $request,
+		string $object_type = ''
+	): int {
 
 		$updated = 0;
 
@@ -91,9 +94,9 @@ class FieldProcessor implements Common\Request\FieldProcessor {
 				continue;
 			}
 
-			if ( ! is_callable( $definition['update_callback'] ) ) {
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					trigger_error( "Invalid callback. Cannot update {$name} field for {$object_type}." );
+			if ( ! \is_callable( $definition['update_callback'] ) ) {
+				if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+					\trigger_error( "Invalid callback. Cannot update {$name} field for {$object_type}." );
 				}
 
 				continue;

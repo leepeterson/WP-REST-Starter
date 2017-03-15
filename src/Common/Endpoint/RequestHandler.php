@@ -4,9 +4,6 @@ declare( strict_types = 1 );
 
 namespace Inpsyde\WPRESTStarter\Common\Endpoint;
 
-use WP_REST_Request;
-use WP_REST_Response;
-
 /**
  * Interface for all request handler implementations.
  *
@@ -20,9 +17,9 @@ interface RequestHandler {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param WP_REST_Request $request Request object.
+	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return WP_REST_Response Response object.
+	 * @return \WP_REST_Response Response object.
 	 */
-	public function handle_request( WP_REST_Request $request ): WP_REST_Response;
+	public function handle_request( \WP_REST_Request $request ): \WP_REST_Response;
 }

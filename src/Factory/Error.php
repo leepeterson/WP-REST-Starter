@@ -6,8 +6,6 @@ namespace Inpsyde\WPRESTStarter\Factory;
 
 use Inpsyde\WPRESTStarter\Common;
 use Inpsyde\WPRESTStarter\Core\Factory;
-use Throwable;
-use WP_Error;
 
 /**
  * Factory for WordPress error objects.
@@ -25,7 +23,7 @@ final class Error implements Common\Factory {
 	 *
 	 * @var string
 	 */
-	const BASE = WP_Error::class;
+	const BASE = \WP_Error::class;
 
 	/**
 	 * @var Factory
@@ -52,16 +50,16 @@ final class Error implements Common\Factory {
 	 * @param array  $args  Optional. Constructor arguments. Defaults to empty array.
 	 * @param string $class Optional. Fully qualified class name. Defaults to empty string.
 	 *
-	 * @return WP_Error WordPress error object.
+	 * @return \WP_Error WordPress error object.
 	 *
-	 * @throws Throwable if caught any and WP_DEBUG is set to true.
+	 * @throws \Throwable if caught any and WP_DEBUG is set to true.
 	 */
-	public function create( array $args = [], string $class = '' ): WP_Error {
+	public function create( array $args = [], string $class = '' ): \WP_Error {
 
 		try {
 			$object = $this->factory->create( $args, $class );
-		} catch ( Throwable $e ) {
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		} catch ( \Throwable $e ) {
+			if ( \defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 				throw $e;
 			}
 

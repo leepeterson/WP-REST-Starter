@@ -5,7 +5,6 @@ declare( strict_types = 1 );
 namespace Inpsyde\WPRESTStarter\Core\Response;
 
 use Inpsyde\WPRESTStarter\Common\Response\DataAccess;
-use WP_REST_Response;
 
 /**
  * Response data access implementation aware of links.
@@ -20,11 +19,11 @@ final class LinkAwareDataAccess implements DataAccess {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param WP_REST_Response $response Response object.
+	 * @param \WP_REST_Response $response Response object.
 	 *
 	 * @return array The array holding the data as well as the defined links of the given response object.
 	 */
-	public function get_data( WP_REST_Response $response ): array {
+	public function get_data( \WP_REST_Response $response ): array {
 
 		$data = (array) $response->get_data();
 
@@ -41,16 +40,16 @@ final class LinkAwareDataAccess implements DataAccess {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param WP_REST_Response $response Response object.
+	 * @param \WP_REST_Response $response Response object.
 	 *
 	 * @return array The array holding the defined links of the given response object.
 	 */
-	private function get_links( WP_REST_Response $response ): array {
+	private function get_links( \WP_REST_Response $response ): array {
 
-		$server = rest_get_server();
+		$server = \rest_get_server();
 
 		foreach ( [ 'get_compact_response_links', 'get_response_links' ] as $method ) {
-			if ( is_callable( [ $server, $method ] ) ) {
+			if ( \is_callable( [ $server, $method ] ) ) {
 				return (array) ( [ $server, $method ] )( $response );
 			}
 		}

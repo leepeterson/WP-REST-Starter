@@ -35,7 +35,7 @@ final class Route implements Common\Route\Route {
 	 */
 	public function __construct( string $url, Common\Arguments $options ) {
 
-		$this->url = trim( $url, '/' );
+		$this->url = \trim( $url, '/' );
 
 		$this->options = $options;
 	}

@@ -4,8 +4,6 @@ declare( strict_types = 1 );
 
 namespace Inpsyde\WPRESTStarter\Common\Response;
 
-use WP_REST_Response;
-
 /**
  * Interface for all response data access implementations.
  *
@@ -19,9 +17,9 @@ interface DataAccess {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param WP_REST_Response $response Response object.
+	 * @param \WP_REST_Response $response Response object.
 	 *
 	 * @return array The array holding the data as well as the defined links of the given response object.
 	 */
-	public function get_data( WP_REST_Response $response ): array;
+	public function get_data( \WP_REST_Response $response ): array;
 }

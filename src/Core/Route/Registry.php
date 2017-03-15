@@ -51,11 +51,11 @@ final class Registry implements Common\Route\Registry {
 		 * @param Common\Route\Collection $routes    Route collection object.
 		 * @param string                  $namespace Namespace.
 		 */
-		do_action( 'wp_rest_starter.register_routes', $routes, $this->namespace );
+		\do_action( 'wp_rest_starter.register_routes', $routes, $this->namespace );
 
 		/** @var Common\Route\Route $route */
 		foreach ( $routes as $route ) {
-			register_rest_route( $this->namespace, $route->get_url(), $route->get_options() );
+			\register_rest_route( $this->namespace, $route->get_url(), $route->get_options() );
 		}
 	}
 }

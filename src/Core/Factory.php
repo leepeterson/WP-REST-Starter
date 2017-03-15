@@ -6,8 +6,6 @@ namespace Inpsyde\WPRESTStarter\Core;
 
 use Inpsyde\WPRESTStarter\Common;
 use Inpsyde\WPRESTStarter\Exception\InvalidClassException;
-use InvalidArgumentException;
-use ReflectionClass;
 
 /**
  * Generic factory implementation to be used by other factories.
@@ -40,15 +38,15 @@ final class Factory implements Common\Factory {
 	 * @param string $base          Fully qualified name of the base class or interface.
 	 * @param string $default_class Optional. Fully qualified name of the default class. Defaults to $base.
 	 *
-	 * @throws InvalidArgumentException if the given base is not a valid fully qualified class or interface name.
-	 * @throws InvalidArgumentException if no default class is given and the base is an interface.
+	 * @throws \InvalidArgumentException if the given base is not a valid fully qualified class or interface name.
+	 * @throws \InvalidArgumentException if no default class is given and the base is an interface.
 	 */
 	public function __construct( string $base, string $default_class = '' ) {
 
-		$this->base_is_class = class_exists( $base );
+		$this->base_is_class = \class_exists( $base );
 
-		if ( ! ( $this->base_is_class || interface_exists( $base ) ) ) {
-			throw new InvalidArgumentException(
+		if ( ! ( $this->base_is_class || \interface_exists( $base ) ) ) {
+			throw new \InvalidArgumentException(
 				__METHOD__ . ' requires a valid fully qualified class or interface name as first argument.'
 			);
 		}
@@ -68,7 +66,7 @@ final class Factory implements Common\Factory {
 			return;
 		}
 
-		throw new InvalidArgumentException(
+		throw new \InvalidArgumentException(
 			__METHOD__ . ' requires a fully qualified class name as first or second argument.'
 		);
 	}
@@ -107,7 +105,7 @@ final class Factory implements Common\Factory {
 			$class = $this->default_class;
 		}
 
-		switch ( count( $args ) ) {
+		switch ( \count( $args ) ) {
 			case 0:
 				return new $class();
 
@@ -115,7 +113,7 @@ final class Factory implements Common\Factory {
 				return new $class( $args[0] );
 		}
 
-		return ( new ReflectionClass( $class ) )->newInstanceArgs( $args );
+		return ( new \ReflectionClass( $class ) )->newInstanceArgs( $args );
 	}
 
 	/**
@@ -130,7 +128,7 @@ final class Factory implements Common\Factory {
 	private function check_class( string $class ) {
 
 		if (
-			! is_subclass_of( $class, $this->base, true )
+			! \is_subclass_of( $class, $this->base, true )
 			&& ( ! $this->base_is_class || $class !== $this->base )
 		) {
 			throw new InvalidClassException( "{$class} is invalid with respect to the defined base {$this->base}." );

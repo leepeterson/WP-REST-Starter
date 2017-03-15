@@ -4,8 +4,6 @@ declare( strict_types = 1 );
 
 namespace Inpsyde\WPRESTStarter\Common\Field;
 
-use IteratorAggregate;
-
 /**
  * Interface for all field collection implementations.
  *
@@ -13,7 +11,7 @@ use IteratorAggregate;
  * @since   1.0.0
  * @since   1.1.0 Removed `to_array()` method.
  */
-interface Collection extends IteratorAggregate {
+interface Collection extends \IteratorAggregate {
 
 	/**
 	 * Adds the given field object to the resource with the given name to the collection.

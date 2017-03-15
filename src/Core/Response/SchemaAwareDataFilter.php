@@ -54,7 +54,7 @@ final class SchemaAwareDataFilter implements DataFilter {
 				continue;
 			}
 
-			if ( ! in_array( $context, (array) $property['context'], true ) ) {
+			if ( ! \in_array( $context, (array) $property['context'], true ) ) {
 				unset( $data[ $key ] );
 
 				continue;
@@ -69,7 +69,7 @@ final class SchemaAwareDataFilter implements DataFilter {
 			}
 
 			foreach ( $property['properties'] as $name => $details ) {
-				if ( empty( $details['context'] ) || in_array( $context, (array) $details['context'], true ) ) {
+				if ( empty( $details['context'] ) || \in_array( $context, (array) $details['context'], true ) ) {
 					continue;
 				}
 

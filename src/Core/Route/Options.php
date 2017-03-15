@@ -9,7 +9,6 @@ use Inpsyde\WPRESTStarter\Common\Endpoint\RequestHandler;
 use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
 use Inpsyde\WPRESTStarter\Common\Route\ExtensibleOptions;
 use Inpsyde\WPRESTStarter\Common\Route\SchemaAwareOptions;
-use WP_REST_Server;
 
 /**
  * Implementation of extensible and schema-aware route options.
@@ -30,7 +29,7 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 *
 	 * @var string
 	 */
-	const DEFAULT_METHODS = WP_REST_Server::READABLE;
+	const DEFAULT_METHODS = \WP_REST_Server::READABLE;
 
 	/**
 	 * @var array
@@ -106,7 +105,7 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 		array $options = []
 	): Options {
 
-		return new static( compact( 'methods', 'callback', 'args' ) + $options );
+		return new static( \compact( 'methods', 'callback', 'args' ) + $options );
 	}
 
 	/**
@@ -139,7 +138,7 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 
 		$options = $options instanceof Arguments ? $options->to_array() : [ (array) $options ];
 
-		$this->options = array_merge( $this->options, $options );
+		$this->options = \array_merge( $this->options, $options );
 
 		return $this;
 	}
