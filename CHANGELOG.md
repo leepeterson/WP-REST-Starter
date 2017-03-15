@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+
+* **[BREAKING]** **Require** PHP 7 or higher.
+
 ## 2.0.1
 
 * **Fix** `~\Core\Route\Options::add()`, see [#1](https://github.com/inpsyde/WP-REST-Starter/issues/1).
