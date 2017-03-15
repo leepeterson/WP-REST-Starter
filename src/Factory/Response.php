@@ -4,9 +4,9 @@ declare( strict_types = 1 );
 
 namespace Inpsyde\WPRESTStarter\Factory;
 
-use Exception;
 use Inpsyde\WPRESTStarter\Common;
 use Inpsyde\WPRESTStarter\Core\Factory;
+use Throwable;
 use WP_REST_Response;
 
 /**
@@ -54,13 +54,13 @@ final class Response implements Common\Factory {
 	 *
 	 * @return WP_REST_Response REST response object.
 	 *
-	 * @throws Exception if caught any and WP_DEBUG is set to true.
+	 * @throws Throwable if caught any and WP_DEBUG is set to true.
 	 */
 	public function create( array $args = [], $class = '' ) {
 
 		try {
 			$object = $this->factory->create( $args, (string) $class );
-		} catch ( Exception $e ) {
+		} catch ( Throwable $e ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 				throw $e;
 			}
