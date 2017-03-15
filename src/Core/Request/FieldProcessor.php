@@ -1,5 +1,7 @@
 <?php # -*- coding: utf-8 -*-
 
+declare( strict_types = 1 );
+
 namespace Inpsyde\WPRESTStarter\Core\Request;
 
 use Inpsyde\WPRESTStarter\Common;
