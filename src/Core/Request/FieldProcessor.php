@@ -30,7 +30,7 @@ class FieldProcessor implements Common\Request\FieldProcessor {
 	 */
 	public function __construct( Common\Field\Access $field_access = null ) {
 
-		$this->field_access = $field_access ?: new Core\Field\Access();
+		$this->field_access = $field_access ?? new Core\Field\Access();
 	}
 
 	/**
