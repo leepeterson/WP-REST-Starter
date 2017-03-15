@@ -25,7 +25,7 @@ final class Response implements Common\Factory {
 	 *
 	 * @var string
 	 */
-	const BASE = '\WP_REST_Response';
+	const BASE = WP_REST_Response::class;
 
 	/**
 	 * @var Factory

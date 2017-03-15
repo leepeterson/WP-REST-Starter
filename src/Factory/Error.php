@@ -25,7 +25,7 @@ final class Error implements Common\Factory {
 	 *
 	 * @var string
 	 */
-	const BASE = '\WP_Error';
+	const BASE = WP_Error::class;
 
 	/**
 	 * @var Factory
