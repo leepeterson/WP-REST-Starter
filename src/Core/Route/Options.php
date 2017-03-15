@@ -117,9 +117,9 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 * @param Schema $schema  Schema object.
 	 * @param array  $options Optional. Route options. Defaults to empty array.
 	 *
-	 * @return Options Route options object.
+	 * @return SchemaAwareOptions Route options object.
 	 */
-	public static function with_schema( Schema $schema, array $options = [] ): Options {
+	public static function with_schema( Schema $schema, array $options = [] ): SchemaAwareOptions {
 
 		return ( new static( $options ) )->set_schema( $schema );
 	}
