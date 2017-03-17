@@ -41,7 +41,7 @@ final class Registry implements Common\Field\Registry {
 		 *
 		 * @param Common\Field\Collection $fields Field collection object.
 		 */
-		\do_action( 'wp_rest_starter.register_fields', $fields );
+		\do_action( Common\Field\Registry::ACTION_REGISTER, $fields );
 
 		foreach ( $fields as $resource => $resource_fields ) {
 			/** @var Common\Field\Field $field */
