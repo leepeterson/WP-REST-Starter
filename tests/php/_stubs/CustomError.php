@@ -5,6 +5,6 @@
  *
  * @since 2.0.0
  */
-class CustomError extends WP_Error {
+class CustomError extends \WP_Error {
 
 }

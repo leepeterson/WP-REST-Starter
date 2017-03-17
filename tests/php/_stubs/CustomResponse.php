@@ -5,6 +5,6 @@
  *
  * @since 2.0.0
  */
-class CustomResponse extends WP_REST_Response {
+class CustomResponse extends \WP_REST_Response {
 
 }
