@@ -1,7 +1,5 @@
 <?php # -*- coding: utf-8 -*-
 
-declare( strict_types = 1 );
-
 namespace Inpsyde\WPRESTStarter\Common\Route;
 
 /**
@@ -11,6 +9,15 @@ namespace Inpsyde\WPRESTStarter\Common\Route;
  * @since   1.0.0
  */
 interface Registry {
+
+	/**
+	 * Action name.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @var string
+	 */
+	const ACTION_REGISTER = 'wp_rest_starter.register_routes';
 
 	/**
 	 * Registers the given routes.
