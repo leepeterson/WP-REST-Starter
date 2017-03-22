@@ -16,12 +16,13 @@ class PermissionCallback {
 	 * Returns a callback that checks if the current user has all of the given capabilities.
 	 *
 	 * @since 1.0.0
+	 * @since 3.0.0 Replaced single string array argument with variadic string arguments.
 	 *
-	 * @param string[] $capabilities Capabilities required to get permission.
+	 * @param string[] ...$capabilities Capabilities required to get permission.
 	 *
 	 * @return \Closure Callback that checks if the current user has all of the given capabilities.
 	 */
-	public function current_user_can( array $capabilities ): \Closure {
+	public function current_user_can( string ...$capabilities ): \Closure {
 
 		/**
 		 * Checks if the current user has specific capabilities.
