@@ -45,7 +45,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Inpsyde\\WPRESTStarter\\Tests\\": "tests/php"
+      "Inpsyde\\WPRESTStarter\\Tests\\Integration\\": "tests/php/integration",
+      "Inpsyde\\WPRESTStarter\\Tests\\Unit\\": "tests/php/unit"
     }
   },
   "extra": {

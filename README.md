@@ -108,7 +108,7 @@ use Inpsyde\WPRESTStarter\Common\Route\Collection;
 use Inpsyde\WPRESTStarter\Core\Route\Options;
 use Inpsyde\WPRESTStarter\Core\Route\Route;
 
-add_action( 'wp_rest_starter.register_routes', function ( Collection $routes, $namespace ) {
+add_action( 'wp_rest_starter.register_routes', function ( Collection $routes, string $namespace ) {
 
 	if ( 'desired-namespace' !== $namespace ) {
 		return;
@@ -168,7 +168,7 @@ add_action( 'rest_api_init', function() {
 		$endpoint_base,
 		Options::from_arguments( $handler, $args, WP_REST_Server::CREATABLE, [
 			// Optional: Set a callback to check permission.
-			'permission_callback' => $permission->current_user_can( [ 'edit_posts', 'custom_cap' ] ),
+			'permission_callback' => $permission->current_user_can( 'edit_posts', 'custom_cap' ),
 		] )
 	) );
 
@@ -220,7 +220,7 @@ add_action( 'rest_api_init', function() {
 	$response_data_access = new Response\LinkAwareDataAccess();
 
 	// Create a response factory.
-	$response_factory = new Factory\Response();
+	$response_factory = new Factory\ResponseFactory();
 
 	// Set up a field-aware schema object (implement ~\Common\Endpoint\Schema).
 	$schema = new Some\Endpoint\Schema( $schema_field_processor );
@@ -266,7 +266,7 @@ add_action( 'rest_api_init', function() {
 			WP_REST_Server::CREATABLE,
 			[
 				// Optional: Set a callback to check permission.
-				'permission_callback' => $permission->current_user_can( [ 'edit_posts', 'custom_cap' ] ),
+				'permission_callback' => $permission->current_user_can( 'edit_posts', 'custom_cap' ),
 			]
 		)->set_schema( $schema )
 	) );
@@ -364,7 +364,7 @@ class SomeEndpointSchema implements Schema {
 	 */
 	public function __construct( FieldProcessor $field_processor = null ) {
 
-		$this->field_processor = $field_processor ?: new Core\Endpoint\FieldProcessor();
+		$this->field_processor = $field_processor ?? new Core\Endpoint\FieldProcessor();
 	}
 
 	/**
@@ -372,8 +372,8 @@ class SomeEndpointSchema implements Schema {
 	 *
 	 * @return array Properties definition.
 	 */
-	public function get_properties() {
-		
+	public function get_properties(): array {
+
 		$properties = [
 			'id' => [
 				'description' => __( "The ID of the data object.", 'some-text-domain' ),
@@ -390,7 +390,7 @@ class SomeEndpointSchema implements Schema {
 	 *
 	 * @return array Schema definition.
 	 */
-	public function get_schema() {
+	public function get_schema(): array {
 
 		return [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
@@ -405,7 +405,7 @@ class SomeEndpointSchema implements Schema {
 	 *
 	 * @return string Schema title.
 	 */
-	public function get_title() {
+	public function get_title(): string {
 
 		return $this->title;
 	}
@@ -419,15 +419,13 @@ The below code also contains a validate callback that returns a `WP_Error` objec
 
 ```php
 <?php
-
 use Inpsyde\WPRESTStarter\Common\Arguments;
-use Inpsyde\WPRESTStarter\Common\Factory;
-use Inpsyde\WPRESTStarter\Factory\Error;
+use Inpsyde\WPRESTStarter\Factory\ErrorFactory;
 
 class SomeEndpointArguments implements Arguments {
 
 	/**
-	 * @var Factory
+	 * @var ErrorFactory
 	 */
 	private $error_factory;
 
@@ -436,11 +434,11 @@ class SomeEndpointArguments implements Arguments {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Factory $error_factory Optional. Error factory object. Defaults to null.
+	 * @param ErrorFactory $error_factory Optional. Error factory object. Defaults to null.
 	 */
-	public function __construct( Factory $error_factory = null ) {
+	public function __construct( ErrorFactory $error_factory = null ) {
 
-		$this->error_factory = $error_factory ?: new Error();
+		$this->error_factory = $error_factory ?? new ErrorFactory();
 	}
 
 	/**
@@ -448,7 +446,7 @@ class SomeEndpointArguments implements Arguments {
 	 *
 	 * @return array[] Arguments array.
 	 */
-	public function to_array() {
+	public function to_array(): array {
 
 		return [
 			'id'   => [
@@ -488,12 +486,10 @@ Data preparation is done by a dedicated formatter.
 
 ```php
 <?php
-
 use Inpsyde\WPRESTStarter\Common\Endpoint;
-use Inpsyde\WPRESTStarter\Common\Factory;
 use Inpsyde\WPRESTStarter\Common\Request\FieldProcessor;
 use Inpsyde\WPRESTStarter\Core;
-use Inpsyde\WPRESTStarter\Factory\Response;
+use Inpsyde\WPRESTStarter\Factory\ResponseFactory;
 use Some\Endpoint\Formatter;
 use Some\External\API;
 
@@ -520,7 +516,7 @@ class SomeRequestHandler implements Endpoint\RequestHandler {
 	private $object_type;
 
 	/**
-	 * @var Factory
+	 * @var ResponseFactory
 	 */
 	private $response_factory;
 
@@ -530,15 +526,15 @@ class SomeRequestHandler implements Endpoint\RequestHandler {
 	 * @param API             $api              API object.
 	 * @param Formatter       $formatter        Formatter object.
 	 * @param Endpoint\Schema $schema           Optional. Schema object. Defaults to null.
-	 * @param FieldProcessor  $field_processor  Optional. Response factory object. Defaults to null.
-	 * @param Factory         $response_factory Optional. Response factory object. Defaults to null.
+	 * @param FieldProcessor  $field_processor  Optional. Field processor object. Defaults to null.
+	 * @param ResponseFactory $response_factory Optional. Response factory object. Defaults to null.
 	 */
 	public function __construct(
 		API $api,
 		Formatter $formatter,
 		Endpoint\Schema $schema = null,
 		FieldProcessor $field_processor = null,
-		Factory $response_factory = null
+		ResponseFactory $response_factory = null
 	) {
 
 		$this->api = $api;
@@ -547,9 +543,9 @@ class SomeRequestHandler implements Endpoint\RequestHandler {
 
 		$this->object_type = $schema ? $schema->get_title() : '';
 
-		$this->field_processor = $field_processor ?: new Core\Request\FieldProcessor();
+		$this->field_processor = $field_processor ?? new Core\Request\FieldProcessor();
 
-		$this->response_factory = $response_factory ?: new Response();
+		$this->response_factory = $response_factory ?? new ResponseFactory();
 	}
 
 	/**
@@ -557,9 +553,9 @@ class SomeRequestHandler implements Endpoint\RequestHandler {
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 *
-	 * @return WP_REST_Response Response object.
+	 * @return WP_REST_Response Response.
 	 */
-	public function handle_request( WP_REST_Request $request ) {
+	public function handle_request( WP_REST_Request $request ): WP_REST_Response {
 
 		$id = $request['id'];
 
@@ -579,11 +575,11 @@ class SomeRequestHandler implements Endpoint\RequestHandler {
 		// Get the (updated) data from the API.
 		$data = $this->api->get_data( $id );
 
+		// Set the request context.
+		$context = $request['context'] ?? 'view';
+
 		// Prepare the data for the response.
-		$data = $this->formatter->format(
-			$data,
-			empty( $request['context'] ) ? 'view' : $request['context']
-		);
+		$data = $this->formatter->format( $data, $context );
 
 		// Update potential fields registered for the resource.
 		$this->field_processor->update_fields_for_object( $data, $request, $this->object_type );
@@ -613,7 +609,7 @@ class SomeFieldSchema implements Schema {
 	 *
 	 * @return array Schema definition.
 	 */
-	public function get_schema() {
+	public function get_schema(): array {
 
 		return [
 			'description' => __( "Whether the object contains explicit content.", 'some-text-domain' ),
@@ -648,9 +644,9 @@ class SomeFieldReader implements Reader {
 	 */
 	public function get_value(
 		array $object,
-		$field_name,
+		string $field_name,
 		WP_REST_Request $request,
-		$object_type = ''
+		string $object_type = ''
 	) {
 
 		if ( empty( $object['id'] ) ) {
@@ -685,9 +681,9 @@ class SomeFieldUpdater implements Updater {
 	 *
 	 * @param callable $permission_callback Optional. Permission callback. Defaults to null.
 	 */
-	public function __construct( callable $permission_callback = null ) {
+	public function __construct( $permission_callback = null ) {
 
-		if ( $permission_callback ) {
+		if ( is_callable( $permission_callback ) ) {
 			$this->permission_callback = $permission_callback;
 		}
 	}
@@ -706,12 +702,12 @@ class SomeFieldUpdater implements Updater {
 	public function update_value(
 		$value,
 		$object,
-		$field_name,
+		string $field_name,
 		WP_REST_Request $request = null,
-		$object_type = ''
-	) {
+		string $object_type = ''
+	): bool {
 
-		if ( $this->permission_callback && ! call_user_func( $this->permission_callback ) ) {
+		if ( $this->permission_callback && ! ( $this->permission_callback )() ) {
 			return false;
 		}
 
@@ -731,13 +727,11 @@ For this reason, the following code shows a potential formatter, even though it 
 
 ```php
 <?php
-
 use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
-use Inpsyde\WPRESTStarter\Common\Factory;
 use Inpsyde\WPRESTStarter\Common\Response\DataAccess;
 use Inpsyde\WPRESTStarter\Common\Response\DataFilter;
 use Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess;
-use Inpsyde\WPRESTStarter\Factory\Response;
+use Inpsyde\WPRESTStarter\Factory\ResponseFactory;
 
 class SomeFormatter {
 
@@ -762,24 +756,24 @@ class SomeFormatter {
 	private $response_data_filter;
 
 	/**
-	 * @var Factory
+	 * @var ResponseFactory
 	 */
 	private $response_factory;
 
 	/**
 	 * Constructor. Sets up the properties.
 	 *
-	 * @param Schema     $schema               Schema object.
-	 * @param string     $namespace            Namespace.
-	 * @param DataFilter $response_data_filter Response data filter object.
-	 * @param Factory    $response_factory     Optional. Response factory object. Defaults to null.
-	 * @param DataAccess $response_data_access Optional. Response data access object. Defaults to null.
+	 * @param Schema          $schema               Schema object.
+	 * @param string          $namespace            Namespace.
+	 * @param DataFilter      $response_data_filter Response data filter object.
+	 * @param ResponseFactory $response_factory     Optional. Response factory object. Defaults to null.
+	 * @param DataAccess      $response_data_access Optional. Response data access object. Defaults to null.
 	 */
 	public function __construct(
 		Schema $schema,
-		$namespace,
+		string $namespace,
 		DataFilter $response_data_filter,
-		Factory $response_factory = null,
+		ResponseFactory $response_factory = null,
 		DataAccess $response_data_access = null
 	) {
 
@@ -789,38 +783,36 @@ class SomeFormatter {
 
 		$this->response_data_filter = $response_data_filter;
 
-		$this->response_factory = $response_factory ?: new Response();
+		$this->response_factory = $response_factory ?? new ResponseFactory();
 
-		$this->response_data_access = $response_data_access ?: new LinkAwareDataAccess();
+		$this->response_data_access = $response_data_access ?? new LinkAwareDataAccess();
 	}
 
 	/**
 	 * Returns a formatted representation of the given data.
 	 *
-	 * @param array  $raw_data Raw data.
-	 * @param string $context  Optional. Request context. Defaults to 'view'.
+	 * @param array[] $raw_data Raw data.
+	 * @param string  $context  Optional. Request context. Defaults to 'view'.
 	 *
-	 * @return mixed The formatted representation of the given data.
+	 * @return array The formatted representation of the given data.
 	 */
-	public function format( array $raw_data, $context = 'view' ) {
+	public function format( array $raw_data, string $context = 'view' ): array {
 
-		$data = [];
+		$data = array_reduce( $raw_data, function ( array $data, array $set ) use ( $context ) {
 
-		foreach ( $raw_data as $set ) {
-			$item = [];
-
-			$item['id'] = isset( $set['id'] ) ? absint( $set['id'] ) : 0;
-
-			$item['name'] = isset( $set['name'] ) ? (string) $set['name'] : '';
-
-			$item['redirect'] = isset( $set['redirect'] ) ? (bool) $set['redirect'] : false;
-
+			$item = [
+				'id'       => (int) ( $set['id'] ?? 0 ),
+				'name'     => (string) ( $set['name'] ?? '' ),
+				'redirect' => (bool) ( $set['redirect'] ?? false ),
+			];
 			$item = $this->response_data_filter->filter_data( $item, $context );
 
 			$response = $this->get_response_with_links( $item, $set );
 
 			$data[] = $this->response_data_access->get_data( $response );
-		}
+
+			return $data;
+		}, [] );
 
 		return $data;
 	}
@@ -833,7 +825,7 @@ class SomeFormatter {
 	 *
 	 * @return WP_REST_Response The response object with the given data and all relevant links.
 	 */
-	private function get_response_with_links( array $data, array $set ) {
+	private function get_response_with_links( array $data, array $set ): WP_REST_Response {
 
 		$links = [];
 

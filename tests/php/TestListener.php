@@ -1,14 +1,18 @@
 <?php # -*- coding: utf-8 -*-
 
+declare( strict_types = 1 );
+
+namespace Inpsyde;
+
 use PHPUnit\Framework\BaseTestListener;
 use PHPUnit\Framework\TestSuite;
 
 /**
- * Test listener implementation taking care of loading stubs for unit tests.
+ * Test listener implementation taking care of test-suite-specific tasks.
  *
  * @since 1.0.0
  */
-class TestListener extends BaseTestListener {
+final class TestListener extends BaseTestListener {
 
 	/**
 	 * Performs individual test-suite-specific actions.
