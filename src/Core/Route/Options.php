@@ -99,7 +99,7 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 * @return Options Route options object.
 	 */
 	public static function with_callback(
-		$callback,
+		callable $callback,
 		array $args = [],
 		string $methods = self::DEFAULT_METHODS,
 		array $options = []
