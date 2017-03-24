@@ -282,7 +282,7 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		if (
 			! \is_scalar( $value )
-			&& ! ( \is_array( $value ) && \array_filter( $value, 'is_scalar' ) )
+			&& ! ( \is_array( $value ) && \array_filter( $value, '\is_scalar' ) )
 		) {
 			throw new \InvalidArgumentException(
 				__METHOD__ . ' requires one or more valid header values as second argument.'
@@ -337,7 +337,7 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		if (
 			! \is_scalar( $value )
-			&& ! ( \is_array( $value ) && \array_filter( $value, 'is_scalar' ) )
+			&& ! ( \is_array( $value ) && \array_filter( $value, '\is_scalar' ) )
 		) {
 			throw new \InvalidArgumentException(
 				__METHOD__ . ' requires one or more valid header values as second argument.'
