@@ -135,6 +135,8 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		parent::__construct( $data, $status, $headers );
 
+		$this->set_body_from_data();
+
 		$this->protocol_version = $protocol_version;
 
 		$this->set_reason_phrase( $reason_phrase );
@@ -431,6 +433,8 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		$clone->body = $body;
 
+		$clone->data = $body->getContents();
+
 		return $clone;
 	}
 
@@ -481,6 +485,22 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	public function getReasonPhrase() {
 
 		return $this->reason_phrase;
+	}
+
+	/**
+	 * Sets the response data.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param mixed $data Response data.
+	 *
+	 * @return void
+	 */
+	public function set_data( $data ) {
+
+		$this->data = $data;
+
+		$this->set_body_from_data();
 	}
 
 	/**
@@ -553,6 +573,24 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 		$this->header_map[ $name ] = (array) $value;
 
 		$this->headers[ $name ] = $value;
+	}
+
+	/**
+	 * Sets the body (stream) according to the data.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @return void
+	 */
+	private function set_body_from_data() {
+
+		if ( '' === $this->data || null === $this->data ) {
+			unset( $this->body );
+
+			return;
+		}
+
+		$this->body = stream_for( $this->data );
 	}
 
 	/**
