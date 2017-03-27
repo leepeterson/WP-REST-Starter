@@ -91,9 +91,8 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	private $body;
 
 	/**
-	 * WordPress stores header values as comma-separated strings (@see \WP_REST_Response::$headers).
-	 *
-	 * PSR-7 requires an associative array with header names as keys, and arrays of header values as values. This is it.
+	 * WordPress stores header values as comma-separated strings (@see \WP_REST_Response::$headers). PSR-7 requires an
+	 * associative array with header names as keys, and arrays of header values as values. This is it.
 	 *
 	 * @var string[][]
 	 */
@@ -258,7 +257,11 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	 */
 	public function getHeaderLine( $name ) {
 
-		return \implode( ', ', $this->getHeader( $name ) );
+		$name = \strtolower( $name );
+
+		return isset( $this->header_names[ $name ] )
+			? $this->headers[ $this->header_names[ $name ] ]
+			: '';
 	}
 
 	/**
