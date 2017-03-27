@@ -501,7 +501,7 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	 */
 	public function set_data( $data ) {
 
-		$this->data = $data;
+		parent::set_data( $data );
 
 		$this->set_body_from_data();
 	}
@@ -521,8 +521,6 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		$this->header_names = [];
 
-		$this->headers = [];
-
 		foreach ( (array) $headers as $name => $header ) {
 			$normalized_name = \strtolower( $name );
 
@@ -531,15 +529,20 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 			if ( isset( $this->header_names[ $normalized_name ] ) ) {
 				$name = $this->header_names[ $normalized_name ];
 
-				$header = \array_merge( (array) $this->headers[ $name ], $header );
+				$header = \array_merge( $this->header_map[ $name ], $header );
 			} else {
 				$this->header_names[ $normalized_name ] = $name;
 			}
 
-			$this->header_map[ $name ] = \implode( ', ', $header );
-
-			$this->headers[ $name ] = $header;
+			$this->header_map[ $name ] = $header;
 		}
+
+		$headers = array_map( function ( array $header ) {
+
+			return implode( ', ', $header );
+		}, $this->header_map );
+
+		parent::set_headers( $headers );
 	}
 
 	/**
@@ -561,21 +564,17 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		if ( isset( $this->header_names[ $normalized_name ] ) ) {
 			$name = $this->header_names[ $normalized_name ];
-
-			if ( ! $replace ) {
-				$this->header_map[ $name ][] = $value;
-
-				$this->headers[ $name ] .= ', ' . $value;
-
-				return;
-			}
 		} else {
 			$this->header_names[ $normalized_name ] = $name;
 		}
 
-		$this->header_map[ $name ] = (array) $value;
+		parent::header( $name, $value, $replace );
 
-		$this->headers[ $name ] = $value;
+		if ( isset( $this->header_names[ $normalized_name ] ) && ! $replace ) {
+			$value = array_merge( $this->header_map[ $name ], (array) $value );
+		}
+
+		$this->header_map[ $name ] = (array) $value;
 	}
 
 	/**
