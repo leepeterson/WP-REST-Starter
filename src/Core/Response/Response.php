@@ -86,11 +86,6 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	];
 
 	/**
-	 * @var StreamInterface
-	 */
-	private $body;
-
-	/**
 	 * WordPress stores header values as comma-separated strings (@see \WP_REST_Response::$headers). PSR-7 requires an
 	 * associative array with header names as keys, and arrays of header values as values. This is it.
 	 *
@@ -114,6 +109,11 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	private $reason_phrase;
 
 	/**
+	 * @var StreamInterface
+	 */
+	private $stream;
+
+	/**
 	 * Constructor. Sets up the properties.
 	 *
 	 * @since  3.0.0
@@ -134,7 +134,7 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		parent::__construct( $data, $status, $headers );
 
-		$this->set_body_from_data();
+		$this->set_stream_from_data();
 
 		$this->protocol_version = $protocol_version;
 
@@ -375,11 +375,11 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	 */
 	public function getBody() {
 
-		if ( ! $this->body ) {
-			$this->body = stream_for( '' );
+		if ( ! $this->stream ) {
+			$this->stream = stream_for( '' );
 		}
 
-		return $this->body;
+		return $this->stream;
 	}
 
 	/**
@@ -393,15 +393,15 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	 */
 	public function withBody( StreamInterface $body ) {
 
-		if ( $body === $this->body ) {
+		if ( $body === $this->stream ) {
 			return $this;
 		}
 
 		$clone = clone $this;
 
-		$clone->body = $body;
-
 		$clone->data = $body->getContents();
+
+		$clone->stream = $body;
 
 		return $clone;
 	}
@@ -468,7 +468,7 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		parent::set_data( $data );
 
-		$this->set_body_from_data();
+		$this->set_stream_from_data();
 	}
 
 	/**
@@ -543,24 +543,6 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	}
 
 	/**
-	 * Sets the body (stream) according to the data.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @return void
-	 */
-	private function set_body_from_data() {
-
-		if ( '' === $this->data || null === $this->data ) {
-			unset( $this->body );
-
-			return;
-		}
-
-		$this->body = stream_for( $this->data );
-	}
-
-	/**
 	 * Sets the given reason phrase, if any, or based on the status code.
 	 *
 	 * @param string $reason_phrase Reason phrase.
@@ -572,6 +554,24 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 		$this->reason_phrase = ( '' === $reason_phrase && \array_key_exists( $this->status, self::REASON_PHRASES ) )
 			? self::REASON_PHRASES[ $this->status ]
 			: $reason_phrase;
+	}
+
+	/**
+	 * Sets the body stream according to the data.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @return void
+	 */
+	private function set_stream_from_data() {
+
+		if ( '' === $this->data || null === $this->data ) {
+			unset( $this->stream );
+
+			return;
+		}
+
+		$this->stream = stream_for( $this->data );
 	}
 
 	/**
