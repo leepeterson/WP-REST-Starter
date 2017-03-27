@@ -241,7 +241,7 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		$name = \strtolower( $name );
 
-		return isset( $this->header_names[ $name ] )
+		return isset( $this->header_map[ $this->header_names[ $name ] ] )
 			? $this->header_map[ $this->header_names[ $name ] ]
 			: [];
 	}
@@ -259,7 +259,7 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		$name = \strtolower( $name );
 
-		return isset( $this->header_names[ $name ] )
+		return isset( $this->headers[ $this->header_names[ $name ] ] )
 			? $this->headers[ $this->header_names[ $name ] ]
 			: '';
 	}
@@ -294,29 +294,10 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 			);
 		}
 
-		$normalized_name = \strtolower( $name );
-
-		$value = $this->normalize_header( (array) $value );
-
 		$clone = clone $this;
-
-		if ( isset( $clone->header_names[ $normalized_name ] ) ) {
-			$stored_name = $clone->header_names[ $normalized_name ];
-
-			unset(
-				$clone->header_map[ $stored_name ],
-				$clone->headers[ $stored_name ]
-			);
-		}
-
-		$clone->header_names[ $normalized_name ] = $name;
-
-		$clone->header_map[ $name ] = $value;
-
-		$clone->headers[ $name ] = \implode( ', ', $value );
+		$clone->header( $name, $value );
 
 		return $clone;
-
 	}
 
 	/**
@@ -349,26 +330,10 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 			);
 		}
 
-		$normalized_name = \strtolower( $name );
-
-		$value = $this->normalize_header( (array) $value );
-
 		$clone = clone $this;
-
-		if ( isset( $clone->header_names[ $normalized_name ] ) ) {
-			$name = $this->header_names[ $normalized_name ];
-
-			$value = \array_merge( $this->header_map[ $name ], $value );
-		} else {
-			$clone->header_names[ $normalized_name ] = $name;
-		}
-
-		$clone->header_map[ $name ] = $value;
-
-		$clone->headers[ $name ] = \implode( ', ', $value );
+		$clone->header( $name, $value, false );
 
 		return $clone;
-
 	}
 
 	/**
