@@ -4,10 +4,8 @@ declare( strict_types = 1 );
 
 namespace Inpsyde\WPRESTStarter\Core\Response;
 
+use Inpsyde\WPRESTStarter\Common\HTTPMessage;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
-
-use function GuzzleHttp\Psr7\stream_for;
 
 /**
  * PSR-7-compliant WordPress REST response implementation.
@@ -16,6 +14,8 @@ use function GuzzleHttp\Psr7\stream_for;
  * @since   3.0.0
  */
 final class Response extends \WP_REST_Response implements ResponseInterface {
+
+	use HTTPMessage;
 
 	/**
 	 * Map of standard HTTP status code => reason phrase.
@@ -94,24 +94,9 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	private $header_map;
 
 	/**
-	 * @var string[]
-	 */
-	private $header_names;
-
-	/**
-	 * @var string
-	 */
-	private $protocol_version;
-
-	/**
 	 * @var string
 	 */
 	private $reason_phrase;
-
-	/**
-	 * @var StreamInterface
-	 */
-	private $stream;
 
 	/**
 	 * Constructor. Sets up the properties.
@@ -134,7 +119,8 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 
 		parent::__construct( $data, $status, $headers );
 
-		$this->set_stream_from_data();
+		// This is only necessary because the parent constructor doesn't use set_data() but writes the $data property.
+		$this->set_stream_for_data( $this->data );
 
 		$this->protocol_version = $protocol_version;
 
@@ -165,245 +151,6 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 			$protocol_version,
 			$reason_phrase
 		);
-	}
-
-	/**
-	 * Returns the HTTP protocol version.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @return string HTTP protocol version.
-	 */
-	public function getProtocolVersion() {
-
-		return $this->protocol_version;
-	}
-
-	/**
-	 * Returns an instance with the specified HTTP protocol version.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $protocol_version HTTP protocol version.
-	 *
-	 * @return Response
-	 */
-	public function withProtocolVersion( $protocol_version ) {
-
-		$protocol_version = (string) $protocol_version;
-		if ( $protocol_version === $this->protocol_version ) {
-			return $this;
-		}
-
-		$clone = clone $this;
-
-		$clone->protocol_version = $protocol_version;
-
-		return $clone;
-	}
-
-	/**
-	 * Returns all message header values.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @return string[][] Associative array with header names as keys, and arrays of header values as values.
-	 */
-	public function getHeaders() {
-
-		return $this->header_map;
-	}
-
-	/**
-	 * Checks if a header exists by the given case-insensitive name.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $name Case-insensitive header field name.
-	 *
-	 * @return bool Whether or not any header names match the given one using a case-insensitive string comparison.
-	 */
-	public function hasHeader( $name ) {
-
-		return isset( $this->header_names[ \strtolower( $name ) ] );
-	}
-
-	/**
-	 * Returns a message header value by the given case-insensitive name.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $name Case-insensitive header field name.
-	 *
-	 * @return string[] An array of string values as provided for the given header.
-	 */
-	public function getHeader( $name ) {
-
-		$name = \strtolower( $name );
-
-		return isset( $this->header_map[ $this->header_names[ $name ] ] )
-			? $this->header_map[ $this->header_names[ $name ] ]
-			: [];
-	}
-
-	/**
-	 * Returns a comma-separated string of the values for a single header.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $name Case-insensitive header field name.
-	 *
-	 * @return string A string of values as provided for the given header concatenated together using a comma.
-	 */
-	public function getHeaderLine( $name ) {
-
-		$name = \strtolower( $name );
-
-		return isset( $this->headers[ $this->header_names[ $name ] ] )
-			? $this->headers[ $this->header_names[ $name ] ]
-			: '';
-	}
-
-	/**
-	 * Returns an instance with the provided value replacing the specified header.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string          $name  Case-insensitive header field name.
-	 * @param string|string[] $value Header value(s).
-	 *
-	 * @return Response
-	 *
-	 * @throws \InvalidArgumentException if the given header name is invalid.
-	 * @throws \InvalidArgumentException if the given header values are invalid.
-	 */
-	public function withHeader( $name, $value ) {
-
-		if ( ! \is_scalar( $name ) ) {
-			throw new \InvalidArgumentException(
-				__METHOD__ . ' requires a valid header name as first argument.'
-			);
-		}
-
-		if (
-			! \is_scalar( $value )
-			&& ! ( \is_array( $value ) && \array_filter( $value, '\is_scalar' ) )
-		) {
-			throw new \InvalidArgumentException(
-				__METHOD__ . ' requires one or more valid header values as second argument.'
-			);
-		}
-
-		$clone = clone $this;
-		$clone->header( $name, $value );
-
-		return $clone;
-	}
-
-	/**
-	 * Returns an instance with the specified header appended with the given value.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string          $name  Case-insensitive header field name to add.
-	 * @param string|string[] $value Header value(s).
-	 *
-	 * @return Response
-	 *
-	 * @throws \InvalidArgumentException if the given header name is invalid.
-	 * @throws \InvalidArgumentException if the given header values are invalid.
-	 */
-	public function withAddedHeader( $name, $value ) {
-
-		if ( ! \is_scalar( $name ) ) {
-			throw new \InvalidArgumentException(
-				__METHOD__ . ' requires a valid header name as first argument.'
-			);
-		}
-
-		if (
-			! \is_scalar( $value )
-			&& ! ( \is_array( $value ) && \array_filter( $value, '\is_scalar' ) )
-		) {
-			throw new \InvalidArgumentException(
-				__METHOD__ . ' requires one or more valid header values as second argument.'
-			);
-		}
-
-		$clone = clone $this;
-		$clone->header( $name, $value, false );
-
-		return $clone;
-	}
-
-	/**
-	 * Returns an instance without the specified header.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $name Case-insensitive header field name to remove.
-	 *
-	 * @return Response
-	 */
-	public function withoutHeader( $name ) {
-
-		$normalized_name = \strtolower( $name );
-
-		if ( ! isset( $this->header_names[ $normalized_name ] ) ) {
-			return $this;
-		}
-
-		$name = $this->header_names[ $normalized_name ];
-
-		$clone = clone $this;
-
-		unset(
-			$clone->header_map[ $name ],
-			$clone->header_names[ $normalized_name ],
-			$clone->headers[ $name ]
-		);
-
-		return $clone;
-	}
-
-	/**
-	 * Returns the body of the message.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @return StreamInterface The body as a stream.
-	 */
-	public function getBody() {
-
-		if ( ! $this->stream ) {
-			$this->stream = stream_for( '' );
-		}
-
-		return $this->stream;
-	}
-
-	/**
-	 * Returns an instance with the specified message body.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param StreamInterface $body Body.
-	 *
-	 * @return Response
-	 */
-	public function withBody( StreamInterface $body ) {
-
-		if ( $body === $this->stream ) {
-			return $this;
-		}
-
-		$clone = clone $this;
-
-		$clone->data = $body->getContents();
-
-		$clone->stream = $body;
-
-		return $clone;
 	}
 
 	/**
@@ -466,9 +213,13 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 	 */
 	public function set_data( $data ) {
 
+		if ( $this->is_locked() ) {
+			return;
+		}
+
 		parent::set_data( $data );
 
-		$this->set_stream_from_data();
+		$this->set_stream_for_data( $this->data );
 	}
 
 	/**
@@ -554,24 +305,6 @@ final class Response extends \WP_REST_Response implements ResponseInterface {
 		$this->reason_phrase = ( '' === $reason_phrase && \array_key_exists( $this->status, self::REASON_PHRASES ) )
 			? self::REASON_PHRASES[ $this->status ]
 			: $reason_phrase;
-	}
-
-	/**
-	 * Sets the body stream according to the data.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @return void
-	 */
-	private function set_stream_from_data() {
-
-		if ( '' === $this->data || null === $this->data ) {
-			unset( $this->stream );
-
-			return;
-		}
-
-		$this->stream = stream_for( $this->data );
 	}
 
 	/**
