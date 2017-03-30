@@ -31,9 +31,7 @@
     "source": "https://github.com/inpsyde/WP-REST-Starter"
   },
   "require": {
-    "php": "^7.0",
-    "guzzlehttp/psr7": "~1.0",
-    "psr/http-message": "~1.0"
+    "php": "^7.0"
   },
   "require-dev": {
     "brain/monkey": "^1.4",
