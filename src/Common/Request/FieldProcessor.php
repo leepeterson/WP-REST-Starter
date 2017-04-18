@@ -39,12 +39,17 @@ interface FieldProcessor {
 	 *
 	 * @see   \WP_REST_Controller::update_additional_fields_for_object
 	 * @since 2.0.0
+	 * @since 3.0.0 Return a bool, and bail on first encountered error.
 	 *
 	 * @param array            $object      Object data in array form.
 	 * @param \WP_REST_Request $request     Request object.
 	 * @param string           $object_type Optional. Object type. Defaults to empty string.
 	 *
-	 * @return int Number of fields updated.
+	 * @return bool Whether or not all fields were updated successfully.
 	 */
-	public function update_fields_for_object( array $object, \WP_REST_Request $request, string $object_type = '' ): int;
+	public function update_fields_for_object(
+		array $object,
+			\WP_REST_Request $request,
+			string $object_type = ''
+	): bool;
 }
