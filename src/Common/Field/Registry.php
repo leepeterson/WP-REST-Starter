@@ -13,6 +13,8 @@ interface Registry {
 	/**
 	 * Action name.
 	 *
+	 * When using this, pass the field collection object as first and only argument.
+	 *
 	 * @since 3.0.0
 	 *
 	 * @var string

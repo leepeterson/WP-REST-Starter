@@ -13,6 +13,8 @@ interface Registry {
 	/**
 	 * Action name.
 	 *
+	 * When using this, pass the route collection object as first, and the namespace as second argument.
+	 *
 	 * @since 3.0.0
 	 *
 	 * @var string
