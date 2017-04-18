@@ -13,6 +13,7 @@ interface Access {
 	/**
 	 * Returns the definition of all registered fields for the given resource.
 	 *
+	 * @see   \WP_REST_Controller::get_additional_fields
 	 * @since 1.0.0
 	 *
 	 * @param string $resource Optional. Resource name (e.g., post). Defaults to empty string.

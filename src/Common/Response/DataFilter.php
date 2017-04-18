@@ -13,6 +13,7 @@ interface DataFilter {
 	/**
 	 * Returns the given data filtered according to the given context.
 	 *
+	 * @see   \WP_REST_Controller::filter_response_by_context
 	 * @since 2.0.0
 	 *
 	 * @param array  $data    Unfiltered response data.

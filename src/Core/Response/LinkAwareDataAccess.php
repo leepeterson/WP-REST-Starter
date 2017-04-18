@@ -17,6 +17,7 @@ final class LinkAwareDataAccess implements DataAccess {
 	/**
 	 * Returns an array holding the data as well as the defined links of the given response object.
 	 *
+	 * @see   \WP_REST_Controller::prepare_response_for_collection
 	 * @since 2.0.0
 	 *
 	 * @param \WP_REST_Response $response Response object.
@@ -37,8 +38,6 @@ final class LinkAwareDataAccess implements DataAccess {
 
 	/**
 	 * Returns an array holding the defined links of the given response object.
-	 *
-	 * @since 2.0.0
 	 *
 	 * @param \WP_REST_Response $response Response object.
 	 *
