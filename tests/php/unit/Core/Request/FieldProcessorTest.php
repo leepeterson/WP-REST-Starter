@@ -6,6 +6,7 @@ use Brain\Monkey;
 use Inpsyde\WPRESTStarter\Common\Field\Access;
 use Inpsyde\WPRESTStarter\Core\Request\FieldProcessor as Testee;
 use Inpsyde\WPRESTStarter\Tests\Unit\TestCase;
+use PHPUnit\Framework\Error\Notice;
 
 /**
  * Test case for the field procesor class.
@@ -109,7 +110,6 @@ class FieldProcessorTest extends TestCase {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @expectedException \PHPUnit\Framework\Error\Notice
 	 * @runInSeparateProcess
 	 *
 	 * @return void
@@ -134,6 +134,8 @@ class FieldProcessorTest extends TestCase {
 					'get_callback' => 'invalid callback',
 				],
 			] );
+
+		self::expectException( Notice::class );
 
 		( new Testee( $field_access ) )->add_fields_to_object( $object, $request, $object_type );
 	}
@@ -255,7 +257,6 @@ class FieldProcessorTest extends TestCase {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @expectedException \PHPUnit\Framework\Error\Notice
 	 * @runInSeparateProcess
 	 *
 	 * @return void
@@ -282,6 +283,8 @@ class FieldProcessorTest extends TestCase {
 					'update_callback' => 'invalid callback',
 				],
 			] );
+
+		self::expectException( Notice::class );
 
 		( new Testee( $field_access ) )->update_fields_for_object( $object, $request, $object_type );
 	}

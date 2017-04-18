@@ -144,7 +144,7 @@ class OptionsTest extends TestCase {
 			[
 				'key' => 'value',
 			],
-			'schema' => [ $schema, 'get_schema' ],
+			'schema' => [ $schema, 'definition' ],
 		];
 
 		self::assertEquals( $expected, $testee->to_array() );
@@ -164,7 +164,7 @@ class OptionsTest extends TestCase {
 		$testee = Testee::with_schema( $schema );
 
 		$expected = [
-			'schema' => [ $schema, 'get_schema' ],
+			'schema' => [ $schema, 'definition' ],
 		];
 
 		self::assertEquals( $expected, $testee->to_array() );
@@ -220,49 +220,6 @@ class OptionsTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function test_add_object_to_empty_options() {
-
-		$options = [ 'some', 'options', 'here' ];
-
-		$testee = ( new Testee() )->add( new Testee( $options ) );
-
-		$expected = [
-			$options,
-		];
-
-		self::assertEquals( $expected, $testee->to_array() );
-	}
-
-	/**
-	 * Tests adding to the options.
-	 *
-	 * @since 2.0.1
-	 *
-	 * @return void
-	 */
-	public function test_add_object_to_options() {
-
-		$initial_options = [ 'some', 'initial', 'options' ];
-
-		$options = [ 'some', 'other', 'options' ];
-
-		$testee = ( new Testee( $initial_options ) )->add( new Testee( $options ) );
-
-		$expected = [
-			$initial_options,
-			$options,
-		];
-
-		self::assertEquals( $expected, $testee->to_array() );
-	}
-
-	/**
-	 * Tests adding to the options.
-	 *
-	 * @since 2.0.1
-	 *
-	 * @return void
-	 */
 	public function test_add_array_to_options_with_schema() {
 
 		$initial_options = [ 'some', 'initial', 'options' ];
@@ -276,33 +233,7 @@ class OptionsTest extends TestCase {
 		$expected = [
 			$initial_options,
 			$options,
-			'schema' => [ $schema, 'get_schema' ],
-		];
-
-		self::assertEquals( $expected, $testee->to_array() );
-	}
-
-	/**
-	 * Tests adding to the options.
-	 *
-	 * @since 2.0.1
-	 *
-	 * @return void
-	 */
-	public function test_add_object_to_options_with_schema() {
-
-		$initial_options = [ 'some', 'initial', 'options' ];
-
-		$schema = \Mockery::mock( Schema::class );
-
-		$options = [ 'some', 'other', 'options' ];
-
-		$testee = ( new Testee( $initial_options ) )->set_schema( $schema )->add( new Testee( $options ) );
-
-		$expected = [
-			$initial_options,
-			$options,
-			'schema' => [ $schema, 'get_schema' ],
+			'schema' => [ $schema, 'definition' ],
 		];
 
 		self::assertEquals( $expected, $testee->to_array() );
@@ -322,7 +253,7 @@ class OptionsTest extends TestCase {
 		$testee = ( new Testee() )->set_schema( $schema );
 
 		$expected = [
-			'schema' => [ $schema, 'get_schema' ],
+			'schema' => [ $schema, 'definition' ],
 		];
 
 		self::assertEquals( $expected, $testee->to_array() );

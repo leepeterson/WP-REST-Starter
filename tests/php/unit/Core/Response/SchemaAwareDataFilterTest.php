@@ -26,7 +26,7 @@ class SchemaAwareDataFilterTest extends TestCase {
 		$context = 'test';
 
 		$schema = \Mockery::mock( Schema::class );
-		$schema->shouldReceive( 'get_properties' )
+		$schema->shouldReceive( 'properties' )
 			->andReturn( [
 				'no-context'    => [ null ],
 				'wrong-context' => [

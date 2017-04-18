@@ -8,6 +8,7 @@ use Inpsyde\WPRESTStarter\Common\Field\Field;
 use Inpsyde\WPRESTStarter\Common\Field\Registry;
 use Inpsyde\WPRESTStarter\Core\Field\Registry as Testee;
 use Inpsyde\WPRESTStarter\Tests\Unit\TestCase;
+use PHPUnit\Framework\Error\Notice;
 
 /**
  * Test case for the field registry class.
@@ -40,7 +41,6 @@ class RegistryTest extends TestCase {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @expectedException \PHPUnit\Framework\Error\Notice
 	 * @runInSeparateProcess
 	 *
 	 * @return void
@@ -48,6 +48,8 @@ class RegistryTest extends TestCase {
 	public function test_register_fields_triggers_notice() {
 
 		define( 'WP_DEBUG', true );
+
+		self::expectException( Notice::class );
 
 		( new Testee() )->register_fields( \Mockery::mock( Collection::class ) );
 
@@ -88,11 +90,11 @@ class RegistryTest extends TestCase {
 	public function test_register_fields() {
 
 		$field_foo = \Mockery::mock( Field::class );
-		$field_foo->shouldReceive( 'get_definition' )
+		$field_foo->shouldReceive( 'definition' )
 			->andReturn( [ 'field_foo_definition' ] );
 
 		$field_bar = \Mockery::mock( Field::class );
-		$field_bar->shouldReceive( 'get_definition' )
+		$field_bar->shouldReceive( 'definition' )
 			->andReturn( [ 'field_bar_definition' ] );
 
 		$fields = \Mockery::mock( Collection::class );

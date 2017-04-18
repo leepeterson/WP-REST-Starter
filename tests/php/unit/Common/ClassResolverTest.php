@@ -3,6 +3,7 @@
 namespace Inpsyde\WPRESTStarter\Tests\Unit\Common;
 
 use Inpsyde\WPRESTStarter\Common\Factory\ClassResolver as Testee;
+use Inpsyde\WPRESTStarter\Common\Factory\Exception\InvalidClass;
 use Inpsyde\WPRESTStarter\Tests\Unit\TestCase;
 
 /**
@@ -18,11 +19,11 @@ class ClassResolverTest extends TestCase {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @expectedException \InvalidArgumentException
-	 *
 	 * @return void
 	 */
 	public function test_construction_with_invalid_base_fails() {
+
+		self::expectException( \InvalidArgumentException::class );
 
 		new Testee( '\InvalidFQN' );
 	}
@@ -32,11 +33,11 @@ class ClassResolverTest extends TestCase {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @expectedException \Inpsyde\WPRESTStarter\Common\Factory\Exception\InvalidClass
-	 *
 	 * @return void
 	 */
 	public function test_construction_with_invalid_default_class_fails() {
+
+		self::expectException( InvalidClass::class );
 
 		new Testee( '\ArrayAccess', '\InvalidFQN' );
 	}
@@ -46,11 +47,11 @@ class ClassResolverTest extends TestCase {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @expectedException \Inpsyde\WPRESTStarter\Common\Factory\Exception\InvalidClass
-	 *
 	 * @return void
 	 */
 	public function test_resolution_with_invalid_class_fails() {
+
+		self::expectException( InvalidClass::class );
 
 		( new Testee( '\ArrayObject' ) )->resolve( '\InvalidFQN' );
 	}
@@ -60,11 +61,11 @@ class ClassResolverTest extends TestCase {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @expectedException \InvalidArgumentException
-	 *
 	 * @return void
 	 */
 	public function test_resolution_with_no_class_fails() {
+
+		self::expectException( \InvalidArgumentException::class );
 
 		( new Testee( '\ArrayAccess' ) )->resolve();
 	}

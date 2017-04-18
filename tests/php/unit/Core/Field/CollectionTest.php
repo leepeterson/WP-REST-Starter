@@ -28,7 +28,7 @@ class CollectionTest extends TestCase {
 		$testee = new Testee();
 
 		$field = \Mockery::mock( Field::class );
-		$field->shouldReceive( 'get_name' );
+		$field->shouldReceive( 'name' );
 
 		self::assertSame( $testee, $testee->add( '', $field ) );
 	}

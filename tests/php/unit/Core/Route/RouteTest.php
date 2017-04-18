@@ -29,7 +29,7 @@ class RouteTest extends TestCase {
 		$options->shouldReceive( 'to_array' )
 			->andReturn( $options_array );
 
-		self::assertSame( $options_array, ( new Testee( '', $options ) )->get_options() );
+		self::assertSame( $options_array, ( new Testee( '', $options ) )->options() );
 	}
 
 	/**
@@ -45,6 +45,6 @@ class RouteTest extends TestCase {
 
 		$options = \Mockery::mock( Arguments::class );
 
-		self::assertSame( $url, ( new Testee( $url, $options) )->get_url() );
+		self::assertSame( $url, ( new Testee( $url, $options) )->url() );
 	}
 }

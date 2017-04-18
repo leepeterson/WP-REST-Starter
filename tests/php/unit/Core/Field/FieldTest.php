@@ -71,7 +71,7 @@ class FieldTest extends TestCase {
 	 */
 	public function test_get_default_definition() {
 
-		self::assertSame( [], ( new Testee( '' ) )->get_definition() );
+		self::assertSame( [], ( new Testee( '' ) )->definition() );
 	}
 
 	/**
@@ -85,7 +85,7 @@ class FieldTest extends TestCase {
 
 		$definition = [ 'some', 'values', 'here' ];
 
-		self::assertSame( $definition, ( new Testee( '', $definition ) )->get_definition() );
+		self::assertSame( $definition, ( new Testee( '', $definition ) )->definition() );
 	}
 
 	/**
@@ -99,6 +99,6 @@ class FieldTest extends TestCase {
 
 		$name = 'some_name_here';
 
-		self::assertSame( $name, ( new Testee( $name ) )->get_name() );
+		self::assertSame( $name, ( new Testee( $name ) )->name() );
 	}
 }

@@ -41,7 +41,7 @@ class FieldProcessorTest extends TestCase {
 			->with( $object_type )
 			->andReturn( [] );
 
-		$actual = ( new Testee( $field_access ) )->get_extended_properties( $properties, $object_type );
+		$actual = ( new Testee( $field_access ) )->add_fields_to_properties( $properties, $object_type );
 
 		self::assertSame( $properties, $actual );
 	}
@@ -104,7 +104,7 @@ class FieldProcessorTest extends TestCase {
 			],
 		];
 
-		$actual = ( new Testee( $field_access ) )->get_extended_properties( $properties, $object_type );
+		$actual = ( new Testee( $field_access ) )->add_fields_to_properties( $properties, $object_type );
 
 		self::assertSame( $expected, $actual );
 	}

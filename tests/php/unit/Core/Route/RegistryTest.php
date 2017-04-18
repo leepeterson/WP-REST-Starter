@@ -51,15 +51,15 @@ class RegistryTest extends TestCase {
 		$namespace = 'some-namespace-here';
 
 		$route_foo = \Mockery::mock( Route::class );
-		$route_foo->shouldReceive( 'get_url' )
+		$route_foo->shouldReceive( 'url' )
 			->andReturn( 'route_foo_url' );
-		$route_foo->shouldReceive( 'get_options' )
+		$route_foo->shouldReceive( 'options' )
 			->andReturn( [ 'route_foo_options' ] );
 
 		$route_bar = \Mockery::mock( Route::class );
-		$route_bar->shouldReceive( 'get_url' )
+		$route_bar->shouldReceive( 'url' )
 			->andReturn( 'route_bar_url' );
-		$route_bar->shouldReceive( 'get_options' )
+		$route_bar->shouldReceive( 'options' )
 			->andReturn( [ 'route_bar_options' ] );
 
 		$routes = \Mockery::mock( Collection::class );

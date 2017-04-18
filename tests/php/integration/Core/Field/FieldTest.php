@@ -33,7 +33,7 @@ class FieldTest extends TestCase {
 			'get_callback' => [ $reader, 'get_value' ],
 		];
 
-		self::assertEquals( $expected, $testee->get_definition() );
+		self::assertEquals( $expected, $testee->definition() );
 	}
 
 	/**
@@ -51,7 +51,7 @@ class FieldTest extends TestCase {
 			'get_callback' => null,
 		];
 
-		self::assertEquals( $expected, $testee->get_definition() );
+		self::assertEquals( $expected, $testee->definition() );
 	}
 
 	/**
@@ -68,10 +68,10 @@ class FieldTest extends TestCase {
 		$testee = ( new Testee( '' ) )->set_schema( $schema );
 
 		$expected = [
-			'schema' => [ $schema, 'get_schema' ],
+			'schema' => [ $schema, 'definition' ],
 		];
 
-		self::assertEquals( $expected, $testee->get_definition() );
+		self::assertEquals( $expected, $testee->definition() );
 	}
 
 	/**
@@ -89,7 +89,7 @@ class FieldTest extends TestCase {
 			'schema' => null,
 		];
 
-		self::assertEquals( $expected, $testee->get_definition() );
+		self::assertEquals( $expected, $testee->definition() );
 	}
 
 	/**
@@ -109,7 +109,7 @@ class FieldTest extends TestCase {
 			'update_callback' => [ $updater, 'update_value' ],
 		];
 
-		self::assertEquals( $expected, $testee->get_definition() );
+		self::assertEquals( $expected, $testee->definition() );
 	}
 
 	/**
@@ -127,6 +127,6 @@ class FieldTest extends TestCase {
 			'update_callback' => null,
 		];
 
-		self::assertEquals( $expected, $testee->get_definition() );
+		self::assertEquals( $expected, $testee->definition() );
 	}
 }
