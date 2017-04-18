@@ -22,6 +22,11 @@ final class FieldProcessor implements Common\Request\FieldProcessor {
 	private $field_access;
 
 	/**
+	 * @var \WP_Error
+	 */
+	private $last_error;
+
+	/**
 	 * Constructor. Sets up the properties.
 	 *
 	 * @since 2.0.0
@@ -36,6 +41,7 @@ final class FieldProcessor implements Common\Request\FieldProcessor {
 	/**
 	 * Returns the given object with added data of all registered readable fields.
 	 *
+	 * @see   \WP_REST_Controller::add_additional_fields_to_object
 	 * @since 2.0.0
 	 *
 	 * @param array            $object      Object data in array form.
@@ -67,8 +73,22 @@ final class FieldProcessor implements Common\Request\FieldProcessor {
 	}
 
 	/**
+	 * Returns the last error encountered when updating fields.
+	 *
+	 * @see   update_fields_for_object
+	 * @since 3.0.0
+	 *
+	 * @return \WP_Error|null WordPress error object, or null.
+	 */
+	public function get_last_error() {
+
+		return $this->last_error;
+	}
+
+	/**
 	 * Updates all registered updatable fields of the given object.
 	 *
+	 * @see   \WP_REST_Controller::update_additional_fields_for_object
 	 * @since 2.0.0
 	 *
 	 * @param array            $object      Object data in array form.
@@ -82,6 +102,8 @@ final class FieldProcessor implements Common\Request\FieldProcessor {
 		\WP_REST_Request $request,
 		string $object_type = ''
 	): int {
+
+		unset( $this->last_error );
 
 		$updated = 0;
 
@@ -103,9 +125,13 @@ final class FieldProcessor implements Common\Request\FieldProcessor {
 				continue;
 			}
 
-			$definition['update_callback']( $request[ $name ], $object, $name, $request, $object_type );
+			$result = $definition['update_callback']( $request[ $name ], $object, $name, $request, $object_type );
 
-			$updated++;
+			if ( \is_wp_error( $result ) ) {
+				$this->last_error = $result;
+			} else {
+				$updated++;
+			}
 		}
 
 		return $updated;

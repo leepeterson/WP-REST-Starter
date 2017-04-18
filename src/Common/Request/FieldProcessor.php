@@ -13,6 +13,7 @@ interface FieldProcessor {
 	/**
 	 * Returns the given object with added data of all registered readable fields.
 	 *
+	 * @see   \WP_REST_Controller::add_additional_fields_to_object
 	 * @since 2.0.0
 	 *
 	 * @param array            $object      Object data in array form.
@@ -24,8 +25,19 @@ interface FieldProcessor {
 	public function add_fields_to_object( array $object, \WP_REST_Request $request, string $object_type = '' ): array;
 
 	/**
+	 * Returns the last error encountered when updating fields.
+	 *
+	 * @see   update_fields_for_object
+	 * @since 3.0.0
+	 *
+	 * @return \WP_Error|null WordPress error object, or null.
+	 */
+	public function get_last_error();
+
+	/**
 	 * Updates all registered updatable fields of the given object.
 	 *
+	 * @see   \WP_REST_Controller::update_additional_fields_for_object
 	 * @since 2.0.0
 	 *
 	 * @param array            $object      Object data in array form.
