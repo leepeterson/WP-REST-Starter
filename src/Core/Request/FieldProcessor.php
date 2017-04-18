@@ -12,8 +12,9 @@ use Inpsyde\WPRESTStarter\Core;
  *
  * @package Inpsyde\WPRESTStarter\Core\Request
  * @since   2.0.0
+ * @since   3.0.0 Made the class final.
  */
-class FieldProcessor implements Common\Request\FieldProcessor {
+final class FieldProcessor implements Common\Request\FieldProcessor {
 
 	/**
 	 * @var Common\Field\Access
