@@ -54,7 +54,6 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 * Returns a new route options object, instantiated with an entry according to the given arguments.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 * @since 1.1.0 Temporarily removed the `RequestHandler` type hint from the `$handler` parameter.
 	 * @since 2.0.0 Added the removed `RequestHandler` type hint for the `$handler` parameter.
 	 *
@@ -82,14 +81,13 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 
 		$options['methods'] = $methods;
 
-		return new static( $options );
+		return new self( $options );
 	}
 
 	/**
 	 * Returns a new route options object with the given arguments.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 *
 	 * @param callable $callback Endpoint callback.
 	 * @param array    $args     Optional. Endpoint arguments. Defaults to empty array.
@@ -105,14 +103,13 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 		array $options = []
 	): Options {
 
-		return new static( \compact( 'methods', 'callback', 'args' ) + $options );
+		return new self( \compact( 'methods', 'callback', 'args' ) + $options );
 	}
 
 	/**
 	 * Returns a new route options object with a schema callback on the given object.
 	 *
 	 * @since 1.0.0
-	 * @since 1.1.0 Make use of late static binding (i.e., return a new instance of `static` instead of `self`).
 	 *
 	 * @param Schema $schema  Schema object.
 	 * @param array  $options Optional. Route options. Defaults to empty array.
@@ -121,7 +118,7 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	 */
 	public static function with_schema( Schema $schema, array $options = [] ): SchemaAwareOptions {
 
-		return ( new static( $options ) )->set_schema( $schema );
+		return ( new self( $options ) )->set_schema( $schema );
 	}
 
 	/**
