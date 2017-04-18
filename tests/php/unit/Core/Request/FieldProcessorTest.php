@@ -9,7 +9,7 @@ use Inpsyde\WPRESTStarter\Tests\Unit\TestCase;
 use PHPUnit\Framework\Error\Notice;
 
 /**
- * Test case for the field procesor class.
+ * Test case for the field processor class.
  *
  * @package Inpsyde\WPRESTStarter\Tests\Unit\Core\Request
  * @since   2.0.0
@@ -141,6 +141,18 @@ class FieldProcessorTest extends TestCase {
 	}
 
 	/**
+	 * Tests no error is set after instantiation.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @return void
+	 */
+	public function test_no_last_error() {
+
+		self::assertSame( null, ( new Testee() )->get_last_error() );
+	}
+
+	/**
 	 * Tests updating fields of the given object with no updatable fields being registered.
 	 *
 	 * @since 2.0.0
@@ -162,7 +174,7 @@ class FieldProcessorTest extends TestCase {
 
 		$actual = ( new Testee( $field_access ) )->update_fields_for_object( $object, $request, $object_type );
 
-		self::assertSame( 0, $actual );
+		self::assertSame( false, $actual );
 	}
 
 	/**
@@ -247,9 +259,12 @@ class FieldProcessorTest extends TestCase {
 				$object_type
 			);
 
+		Monkey\Functions::when( 'is_wp_error' )
+			->justReturn( false );
+
 		$actual = ( new Testee( $field_access ) )->update_fields_for_object( $object, $request, $object_type );
 
-		self::assertSame( 2, $actual );
+		self::assertSame( true, $actual );
 	}
 
 	/**
@@ -287,5 +302,47 @@ class FieldProcessorTest extends TestCase {
 		self::expectException( Notice::class );
 
 		( new Testee( $field_access ) )->update_fields_for_object( $object, $request, $object_type );
+	}
+
+	/**
+	 * Tests updating fields of the given object correctly handles WP_Error objects returned by update callbacks.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @return void
+	 */
+	public function test_update_fields_correctly_handles_error_objects() {
+
+		$object = [
+			'some',
+			'data',
+			'here',
+		];
+
+		$request = \Mockery::mock( \WP_REST_Request::class, \ArrayAccess::class );
+		$request->shouldReceive( 'offsetExists' )
+			->andReturn( true );
+		$request->shouldReceive( 'offsetGet' );
+
+		$object_type = 'some_type_here';
+
+		$field_access = \Mockery::mock( Access::class );
+		$field_access->shouldReceive( 'get_fields' )
+			->with( $object_type )
+			->andReturn( [
+				[
+					'update_callback' => 'noop',
+				],
+				[
+					'update_callback' => 'noop',
+				],
+			] );
+
+		Monkey\Functions::when( 'is_wp_error' )
+			->justReturn( true );
+
+		$actual = ( new Testee( $field_access ) )->update_fields_for_object( $object, $request, $object_type );
+
+		self::assertSame( false, $actual );
 	}
 }
