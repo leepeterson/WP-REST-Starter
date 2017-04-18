@@ -3,6 +3,11 @@
 ## 3.0.0
 
 * **[BREAKING]** **Require** PHP 7 or higher.
+* **[BREAKING]** **Finalize** `~\Core\Endpoint\FieldProcessor` and `~\Core\Request\FieldProcessor` classes.
+* **[BREAKING]** **Remove** `get_` prefix from all data type getters (e.g., `~\Common\Field\Field::name()`).
+* **[BREAKING]** **Rename** `FieldProcessor::get_extended_properties()` to `FieldProcessor::add_fields_to_properties()`.
+* **[BREAKING]** **Require** an options array in `~\Common\Route\ExtensibleOptions::add()`.
+* **Introduce** `current_user_can_for_site()` permission callback factory method.
 
 ## 2.0.1
 
