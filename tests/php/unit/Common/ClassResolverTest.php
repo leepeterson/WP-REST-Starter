@@ -52,7 +52,7 @@ class ClassResolverTest extends TestCase {
 	 */
 	public function test_resolution_with_invalid_class_fails() {
 
-		( new Testee( '\ArrayObject' ) )->resolve_class( '\InvalidFQN' );
+		( new Testee( '\ArrayObject' ) )->resolve( '\InvalidFQN' );
 	}
 
 	/**
@@ -66,6 +66,6 @@ class ClassResolverTest extends TestCase {
 	 */
 	public function test_resolution_with_no_class_fails() {
 
-		( new Testee( '\ArrayAccess' ) )->resolve_class();
+		( new Testee( '\ArrayAccess' ) )->resolve();
 	}
 }

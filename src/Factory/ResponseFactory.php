@@ -45,7 +45,7 @@ class ResponseFactory {
 	 */
 	public function create( array $args = [], string $class = '' ): \WP_REST_Response {
 
-		$class = $this->class_resolver->resolve_class( $class );
+		$class = $this->class_resolver->resolve( $class );
 
 		return new $class( ...$args );
 	}

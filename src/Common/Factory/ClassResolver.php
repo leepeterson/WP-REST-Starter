@@ -61,13 +61,15 @@ class ClassResolver {
 	/**
 	 * Resolves the class to be used for instantiation, which might be either the given class or the default class.
 	 *
+	 * @since 3.0.0
+	 *
 	 * @param string $class Optional. Initial class to be used. Defaults to empty string.
 	 *
 	 * @return string Resolved fully qualified class name.
 	 *
 	 * @throws \InvalidArgumentException if no class is given and no default class is available.
 	 */
-	public function resolve_class( string $class = '' ): string {
+	public function resolve( string $class = '' ): string {
 
 		if ( $class && $this->default_class !== $class ) {
 			return $this->check_class( $class );
