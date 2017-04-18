@@ -28,7 +28,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 		Monkey::setUpWP();
 
 		// Define a noop function mock to be used in tests.
-		Monkey\Functions::when( 'noop' );
+		Monkey\Functions::when( 'noop' )->justReturn();
 	}
 
 	/**
