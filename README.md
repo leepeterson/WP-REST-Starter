@@ -145,10 +145,12 @@ add_action( 'rest_api_init', function() {
 
 	$endpoint_base = 'some-data-type';
 
-	// Set up the request handler (implement ~\Common\Endpoint\RequestHandler).
+	// Set up the request handler.
+	/** @var $handler Inpsyde\WPRESTStarter\Common\Endpoint\RequestHandler */
 	$handler = new Some\Custom\ReadRequestHandler( /* ...args */ );
 
-	// Optional: Set up an according endpoint $args object (implement ~\Common\Arguments).
+	// Optional: Set up an according endpoint $args object.
+	/** @var $handler Inpsyde\WPRESTStarter\Common\Arguments */
 	$args = new Some\Custom\ReadArguments();
 
 	// Register a route for the READ endpoint.
@@ -157,10 +159,12 @@ add_action( 'rest_api_init', function() {
 		Options::from_arguments( $handler, $args )
 	) );
 
-	// Set up the request handler (implement ~\Common\Endpoint\RequestHandler).
+	// Set up the request handler.
+	/** @var $handler Inpsyde\WPRESTStarter\Common\Endpoint\RequestHandler */
 	$handler = new Some\Custom\CreateRequestHandler( /* ...args */ );
 
-	// Optional: Set up an according endpoint $args object (implement ~\Common\Arguments).
+	// Optional: Set up an according endpoint $args object.
+	/** @var $handler Inpsyde\WPRESTStarter\Common\Arguments */
 	$args = new Some\Custom\CreateArguments();
 
 	// Register a route for the CREATE endpoint.
@@ -222,10 +226,11 @@ add_action( 'rest_api_init', function() {
 	// Create a response factory.
 	$response_factory = new Factory\ResponseFactory();
 
-	// Set up a field-aware schema object (implement ~\Common\Endpoint\Schema).
+	// Set up a field-aware schema object.
+	/** @var $schema Inpsyde\WPRESTStarter\Common\Endpoint\Schema */
 	$schema = new Some\Endpoint\Schema( $schema_field_processor );
 
-	$base = $schema->get_title();
+	$base = $schema->title();
 
 	// Optional: Set up a formatter taking care of data preparation.
 	$formatter = new Some\Endpoint\Formatter(
@@ -274,7 +279,7 @@ add_action( 'rest_api_init', function() {
 	// Optional: Register a route for the endpoint schema.
 	$routes->add( new Route(
 		$base . '/schema',
-		Options::with_callback( [ $schema, 'get_schema' ] )
+		Options::with_callback( [ $schema, 'definition' ] )
 	) );
 
 	// Register all routes in your desired namespace.
@@ -300,33 +305,37 @@ add_action( 'rest_api_init', function() {
 	// Create a new field collection.
 	$fields = new Collection();
 
-	// Optional: Set up the field reader (implement ~\Common\Field\Reader).
+	// Optional: Set up the field reader.
+	/** @var $reader Inpsyde\WPRESTStarter\Common\Field\Reader */
 	$reader = new Some\Field\Reader();
 
-	// Optional: Set up the field updater (implement ~\Common\Field\Updater).
-	$updater = new Some\Field\Reader();
+	// Optional: Set up the field updater.
+	/** @var $updater Inpsyde\WPRESTStarter\Common\Field\Updater */
+	$updater = new Some\Field\Updater();
 
-	// Optional: Create a field schema (implement ~\Common\Schema).
+	// Optional: Create a field schema.
+	/** @var $schema Inpsyde\WPRESTStarter\Common\Schema */
 	$schema = new Some\Field\Schema();
 
-	// Register a read- and updatable field for some resource.
-	$fields->add(
-		'some-data-type',
-		( new Field( 'has_explicit_content' ) )
-			->set_get_callback( $reader )
-			->set_update_callback( $updater )
-			->set_schema( $schema )
-	);
+	// Create a readable and updatable field for some resource.
+	$field = new Field( 'has_explicit_content' );
+	$field->set_get_callback( $reader );
+	$field->set_update_callback( $updater );
+	$field->set_schema( $schema );
 
-	// Set up the field reader (implement ~\Common\Field\Reader).
-	$reader = new Some\Field\Reader();
+	// Add the field.
+	$fields->add( 'some-data-type', $field );
 
-	// Register another read-only field for some resource.
-	$fields->add(
-		'some-data-type',
-		( new Field( 'is_long_read' ) )
-			->set_get_callback( $reader )
-	);
+	// Set up the field reader.
+	/** @var $reader Inpsyde\WPRESTStarter\Common\Field\Reader */
+	$reader = new Other\Field\Reader();
+
+	// Create another read-only field for some resource.
+	$field = new Field( 'is_long_read' );
+	$field->set_get_callback( $reader );
+
+	// Add the field.
+	$fields->add( 'some-data-type', $field );
 
 	// Register all fields.
 	( new Registry() )->register_fields( $fields );
@@ -372,7 +381,7 @@ class SomeEndpointSchema implements Schema {
 	 *
 	 * @return array Properties definition.
 	 */
-	public function get_properties(): array {
+	public function properties(): array {
 
 		$properties = [
 			'id' => [
@@ -382,7 +391,7 @@ class SomeEndpointSchema implements Schema {
 			],
 		];
 
-		return $this->field_processor->get_extended_properties( $properties, $this->title );
+		return $this->field_processor->add_fields_to_properties( $properties, $this->title );
 	}
 
 	/**
@@ -390,13 +399,13 @@ class SomeEndpointSchema implements Schema {
 	 *
 	 * @return array Schema definition.
 	 */
-	public function get_schema(): array {
+	public function definition(): array {
 
 		return [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => $this->title,
 			'type'       => 'object',
-			'properties' => $this->get_properties(),
+			'properties' => $this->properties(),
 		];
 	}
 
@@ -405,7 +414,7 @@ class SomeEndpointSchema implements Schema {
 	 *
 	 * @return string Schema title.
 	 */
-	public function get_title(): string {
+	public function title(): string {
 
 		return $this->title;
 	}
@@ -541,7 +550,7 @@ class SomeRequestHandler implements Endpoint\RequestHandler {
 
 		$this->formatter = $formatter;
 
-		$this->object_type = $schema ? $schema->get_title() : '';
+		$this->object_type = $schema ? $schema->title() : '';
 
 		$this->field_processor = $field_processor ?? new Core\Request\FieldProcessor();
 
@@ -609,7 +618,7 @@ class SomeFieldSchema implements Schema {
 	 *
 	 * @return array Schema definition.
 	 */
-	public function get_schema(): array {
+	public function definition(): array {
 
 		return [
 			'description' => __( "Whether the object contains explicit content.", 'some-text-domain' ),
@@ -731,6 +740,7 @@ use Inpsyde\WPRESTStarter\Common\Endpoint\Schema;
 use Inpsyde\WPRESTStarter\Common\Response\DataAccess;
 use Inpsyde\WPRESTStarter\Common\Response\DataFilter;
 use Inpsyde\WPRESTStarter\Core\Response\LinkAwareDataAccess;
+use Inpsyde\WPRESTStarter\Core\Response\SchemaAwareDataFilter;
 use Inpsyde\WPRESTStarter\Factory\ResponseFactory;
 
 class SomeFormatter {
@@ -765,23 +775,23 @@ class SomeFormatter {
 	 *
 	 * @param Schema          $schema               Schema object.
 	 * @param string          $namespace            Namespace.
-	 * @param DataFilter      $response_data_filter Response data filter object.
+	 * @param DataFilter      $response_data_filter Optional. Response data filter object. Defaults to null.
 	 * @param ResponseFactory $response_factory     Optional. Response factory object. Defaults to null.
 	 * @param DataAccess      $response_data_access Optional. Response data access object. Defaults to null.
 	 */
 	public function __construct(
 		Schema $schema,
 		string $namespace,
-		DataFilter $response_data_filter,
+		DataFilter $response_data_filter = null,
 		ResponseFactory $response_factory = null,
 		DataAccess $response_data_access = null
 	) {
 
-		$this->properties = $schema->get_properties();
+		$this->properties = $schema->properties();
 
-		$this->link_base = $namespace . '/' . $schema->get_title();
+		$this->link_base = $namespace . '/' . $schema->title();
 
-		$this->response_data_filter = $response_data_filter;
+		$this->response_data_filter = $response_data_filter ?? new SchemaAwareDataFilter( $schema );
 
 		$this->response_factory = $response_factory ?? new ResponseFactory();
 
