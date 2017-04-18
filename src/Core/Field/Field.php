@@ -18,6 +18,7 @@ use Inpsyde\WPRESTStarter\Common\Schema;
  * @since   1.0.0
  * @since   1.1.0 Implement specific interfaces for readable, updatable and schema-aware fields.
  * @since   2.0.0 Made the class final.
+ * @since   3.0.0 Removed "get_" prefix from getters.
  */
 final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 
@@ -75,7 +76,7 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 */
 	public function set_schema( Schema $schema = null ): SchemaAwareField {
 
-		$this->definition['schema'] = $schema ? [ $schema, 'get_schema' ] : null;
+		$this->definition['schema'] = $schema ? [ $schema, 'definition' ] : null;
 
 		return $this;
 	}
@@ -104,7 +105,7 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @return array Field definition.
 	 */
-	public function get_definition(): array {
+	public function definition(): array {
 
 		return $this->definition;
 	}
@@ -117,7 +118,7 @@ final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 	 *
 	 * @return string Field name.
 	 */
-	public function get_name(): string {
+	public function name(): string {
 
 		return $this->name;
 	}

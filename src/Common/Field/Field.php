@@ -7,6 +7,7 @@ namespace Inpsyde\WPRESTStarter\Common\Field;
  *
  * @package Inpsyde\WPRESTStarter\Common\Field
  * @since   1.0.0
+ * @since   3.0.0 Removed "get_" prefix from getters.
  */
 interface Field {
 
@@ -14,19 +15,19 @@ interface Field {
 	 * Returns the field definition (i.e., callbacks and schema).
 	 *
 	 * @see   register_rest_field()
-	 * @since 1.0.0
+	 * @since 3.0.0
 	 *
 	 * @return array Field definition.
 	 */
-	public function get_definition(): array;
+	public function definition(): array;
 
 	/**
 	 * Returns the name of the field.
 	 *
 	 * @see   register_rest_field()
-	 * @since 1.0.0
+	 * @since 3.0.0
 	 *
 	 * @return string Field name.
 	 */
-	public function get_name(): string;
+	public function name(): string;
 }

@@ -10,24 +10,25 @@ use Inpsyde\WPRESTStarter\Common;
  * @package Inpsyde\WPRESTStarter\Common\Endpoint
  * @since   1.0.0
  * @since   2.0.0 Added get_title() method.
+ * @since   3.0.0 Removed "get_" prefix from getters.
  */
 interface Schema extends Common\Schema {
 
 	/**
 	 * Returns the properties of the schema.
 	 *
-	 * @since 1.0.0
+	 * @since 3.0.0
 	 *
 	 * @return array Properties definition.
 	 */
-	public function get_properties(): array;
+	public function properties(): array;
 
 	/**
 	 * Returns the title of the schema.
 	 *
-	 * @since 2.0.0
+	 * @since 3.0.0
 	 *
 	 * @return string Title.
 	 */
-	public function get_title(): string;
+	public function title(): string;
 }

@@ -41,14 +41,14 @@ final class Route implements Common\Route\Route {
 	}
 
 	/**
-	 * Returns an array of options for the endpoint, or an array of arrays for multiple methods.
+	 * Returns an array of options for the route, or an array of arrays for multiple HTTP request methods.
 	 *
 	 * @see   register_rest_route()
 	 * @since 1.0.0
 	 *
 	 * @return array Route options.
 	 */
-	public function get_options(): array {
+	public function options(): array {
 
 		return $this->options->to_array();
 	}
@@ -61,7 +61,7 @@ final class Route implements Common\Route\Route {
 	 *
 	 * @return string Base URL of the route.
 	 */
-	public function get_url(): string {
+	public function url(): string {
 
 		return $this->url;
 	}
