@@ -125,20 +125,18 @@ final class Options implements ExtensibleOptions, SchemaAwareOptions {
 	}
 
 	/**
-	 * Adds the given options object or array as new entry to the internal options.
+	 * Adds the given route options as new entry to the internal options.
 	 *
-	 * @since 1.0.0
-	 * @since 1.1.0 Removed the array type hint from the $options parameter.
+	 * @since 1.1.0
+	 * @since 2.0.0 Require $options to be an array.
 	 *
-	 * @param Arguments|array $options Options object or array.
+	 * @param array $options Route options.
 	 *
 	 * @return ExtensibleOptions Options object.
 	 */
-	public function add( $options ): ExtensibleOptions {
+	public function add( array $options ): ExtensibleOptions {
 
-		$options = $options instanceof Arguments ? $options->to_array() : [ (array) $options ];
-
-		$this->options = \array_merge( $this->options, $options );
+		$this->options = \array_merge( $this->options, [ $options ] );
 
 		return $this;
 	}

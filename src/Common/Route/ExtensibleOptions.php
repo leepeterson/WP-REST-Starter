@@ -13,13 +13,14 @@ use Inpsyde\WPRESTStarter\Common\Arguments;
 interface ExtensibleOptions extends Arguments {
 
 	/**
-	 * Adds the given options object or array as new entry to the internal options.
+	 * Adds the given route options as new entry to the internal options.
 	 *
 	 * @since 1.1.0
+	 * @since 2.0.0 Require $options to be an array.
 	 *
-	 * @param Arguments|array $options Options object or array.
+	 * @param array $options Route options.
 	 *
 	 * @return ExtensibleOptions Options object.
 	 */
-	public function add( $options ): ExtensibleOptions;
+	public function add( array $options ): ExtensibleOptions;
 }
