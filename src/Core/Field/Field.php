@@ -18,7 +18,6 @@ use Inpsyde\WPRESTStarter\Common\Schema;
  * @since   1.0.0
  * @since   1.1.0 Implement specific interfaces for readable, updatable and schema-aware fields.
  * @since   2.0.0 Made the class final.
- * @since   3.0.0 Removed "get_" prefix from getters.
  */
 final class Field implements ReadableField, UpdatableField, SchemaAwareField {
 

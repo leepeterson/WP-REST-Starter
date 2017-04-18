@@ -46,7 +46,7 @@ final class Registry implements Common\Field\Registry {
 		foreach ( $fields as $resource => $resource_fields ) {
 			/** @var Common\Field\Field $field */
 			foreach ( $resource_fields as $field_name => $field ) {
-				\register_rest_field( $resource, $field_name, $field->get_definition() );
+				\register_rest_field( $resource, $field_name, $field->definition() );
 			}
 		}
 	}

@@ -11,9 +11,7 @@ use Inpsyde\WPRESTStarter\Common;
  *
  * @package Inpsyde\WPRESTStarter\Core\Field
  * @since   1.0.0
- * @since   1.1.0 Deprecated `to_array()` method.
  * @since   2.0.0 Made the class final.
- * @since   2.0.0 Removed `to_array()` method.
  */
 final class Collection implements Common\Field\Collection {
 
@@ -34,7 +32,7 @@ final class Collection implements Common\Field\Collection {
 	 */
 	public function add( string $resource, Common\Field\Field $field ): Common\Field\Collection {
 
-		$this->fields[ $resource ][ $field->get_name() ] = $field;
+		$this->fields[ $resource ][ $field->name() ] = $field;
 
 		return $this;
 	}

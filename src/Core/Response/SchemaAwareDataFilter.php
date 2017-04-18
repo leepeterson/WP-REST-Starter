@@ -29,7 +29,7 @@ final class SchemaAwareDataFilter implements DataFilter {
 	 */
 	public function __construct( Schema $schema ) {
 
-		$this->properties = $schema->get_properties();
+		$this->properties = $schema->properties();
 	}
 
 	/**

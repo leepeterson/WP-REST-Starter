@@ -55,7 +55,7 @@ final class Registry implements Common\Route\Registry {
 
 		/** @var Common\Route\Route $route */
 		foreach ( $routes as $route ) {
-			\register_rest_route( $this->namespace, $route->get_url(), $route->get_options() );
+			\register_rest_route( $this->namespace, $route->url(), $route->options() );
 		}
 	}
 }

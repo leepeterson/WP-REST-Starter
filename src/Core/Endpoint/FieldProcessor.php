@@ -12,8 +12,9 @@ use Inpsyde\WPRESTStarter\Core;
  *
  * @package Inpsyde\WPRESTStarter\Core\Endpoint
  * @since   2.0.0
+ * @since   3.0.0 Made the class final.
  */
-class FieldProcessor implements Common\Endpoint\FieldProcessor {
+final class FieldProcessor implements Common\Endpoint\FieldProcessor {
 
 	/**
 	 * @var Common\Field\Access
@@ -35,14 +36,14 @@ class FieldProcessor implements Common\Endpoint\FieldProcessor {
 	/**
 	 * Returns the given properties with added data of all schema-aware fields registered for the given object type.
 	 *
-	 * @since 2.0.0
+	 * @since 3.0.0
 	 *
 	 * @param array  $properties  Schema properties definition.
 	 * @param string $object_type Object type.
 	 *
 	 * @return array Properties with added data of all schema-aware fields registered for the given object type.
 	 */
-	public function get_extended_properties( array $properties, string $object_type ): array {
+	public function add_fields_to_properties( array $properties, string $object_type ): array {
 
 		$fields = $this->field_access->get_fields( $object_type );
 		foreach ( $fields as $name => $definition ) {
