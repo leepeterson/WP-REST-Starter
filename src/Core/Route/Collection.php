@@ -11,9 +11,7 @@ use Inpsyde\WPRESTStarter\Common;
  *
  * @package Inpsyde\WPRESTStarter\Core\Route
  * @since   1.0.0
- * @since   1.1.0 Deprecated `to_array()` method.
  * @since   2.0.0 Made the class final.
- * @since   2.0.0 Removed `to_array()` method.
  */
 final class Collection implements Common\Route\Collection {
 
