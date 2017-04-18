@@ -15,7 +15,7 @@ use Inpsyde\WPRESTStarter\Tests\Unit\TestCase;
 class SchemaAwareDataFilterTest extends TestCase {
 
 	/**
-	 * Tests filtering the reponse data.
+	 * Tests filtering the response data.
 	 *
 	 * @since 2.0.0
 	 *

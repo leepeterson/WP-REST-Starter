@@ -43,7 +43,7 @@ class LinkAwareDataAccessTest extends TestCase {
 	}
 
 	/**
-	 * Tests getting the response data with compoact links.
+	 * Tests getting the response data with compact links.
 	 *
 	 * @since 2.0.0
 	 *

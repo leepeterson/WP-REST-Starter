@@ -7,7 +7,7 @@ use Inpsyde\WPRESTStarter\Core\Endpoint\FieldProcessor as Testee;
 use Inpsyde\WPRESTStarter\Tests\Unit\TestCase;
 
 /**
- * Test case for the endpoint schema field procesor class.
+ * Test case for the endpoint schema field processor class.
  *
  * @package Inpsyde\WPRESTStarter\Tests\Unit\Core\Endpoint
  * @since   2.0.0
