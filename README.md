@@ -6,7 +6,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
 [![License](https://img.shields.io/packagist/l/inpsyde/wp-rest-starter.svg)](https://packagist.org/packages/inpsyde/wp-rest-starter)
 
-> Starter package for working with the WP REST API in an object-oriented fashion.
+> Starter package for working with the WordPress REST API in an object-oriented fashion.
 
 ![WP REST Starter](resources/images/banner.png)
 

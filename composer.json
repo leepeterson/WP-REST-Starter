@@ -1,6 +1,6 @@
 {
   "name": "inpsyde/wp-rest-starter",
-  "description": "Starter package for working with the WP REST API in an object-oriented fashion.",
+  "description": "Starter package for working with the WordPress REST API in an object-oriented fashion.",
   "type": "library",
   "keywords": [
     "api",
