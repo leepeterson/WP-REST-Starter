@@ -7,7 +7,7 @@ namespace Inpsyde\WPRESTStarter\Common;
  *
  * @package Inpsyde\WPRESTStarter\Common
  * @since   1.0.0
- * @since   3.0.0 Removed "get_" prefix from getter.
+ * @since   3.0.0 Renamed "get_schema()" to "definition()".
  */
 interface Schema {
 
